@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'channel/paymentez_channel.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -17,10 +19,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-
-
+  MyHomePage({Key key, this.title}) : super(key: key){
+    Paymentez().init();
+  }
   final String title;
 
   @override
@@ -28,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   int _counter = 0;
 
   void _incrementCounter() {
