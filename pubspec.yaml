@@ -1,0 +1,32 @@
+name: paymentez_mobile
+description: A new Flutter module to use the paymentez services for Android and IOS apps.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^3.0.8
+  equatable: ^1.0.0
+  meta: ^1.1.6
+  font_awesome_flutter: ^8.4.0
+  flutter_bloc: ^3.1.0
+
+
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+
+flutter:
+  uses-material-design: true
+  module:
+    androidX: true
+    androidPackage: com.paymentez.paymentez_mobile
+    iosBundleIdentifier: com.paymentez.paymentezMobile
