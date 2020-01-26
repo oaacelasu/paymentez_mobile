@@ -8,18 +8,20 @@ abstract class ConfigEvent extends Equatable {
 }
 
 class SetEnvironment extends ConfigEvent {
-
-  final int testMode;
+  final String testMode;
   final String paymentezClientAppCode;
   final String paymentezClientAppKey;
 
-
-  const SetEnvironment({@required this.testMode, @required this.paymentezClientAppCode,@required this.paymentezClientAppKey});
+  const SetEnvironment(
+      {@required this.testMode,
+      @required this.paymentezClientAppCode,
+      @required this.paymentezClientAppKey});
 
   @override
-  List<Object> get props => [testMode, paymentezClientAppCode, paymentezClientAppKey];
+  List<Object> get props =>
+      [testMode, paymentezClientAppCode, paymentezClientAppKey];
 
   @override
-  String toString() => 'SetEnvironment { testMode :$testMode, paymentezClientAppCode: $paymentezClientAppCode, $paymentezClientAppKey}';
-
+  String toString() =>
+      'SetEnvironment { testMode :$testMode, paymentezClientAppCode: $paymentezClientAppCode, $paymentezClientAppKey}';
 }

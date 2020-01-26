@@ -21,6 +21,7 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get numberCardDefaultMask => "XXXX XXXX XXXX XXXX";
 }
 
 class $en extends S {

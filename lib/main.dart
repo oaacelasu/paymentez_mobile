@@ -1,72 +1,73 @@
+import 'package:after_layout/after_layout.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:paymentez_mobile/config/bloc.dart';
+import 'package:paymentez_mobile/repository/paymentez_repository.dart';
+import 'package:paymentez_mobile/simple_bloc_delegate.dart';
 
+import 'add_card/add_card_screen.dart';
 import 'channel/paymentez_channel.dart';
+import 'generated/i18n.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  BlocSupervisor.delegate = SimpleBlocDelegate();
+  runApp(
+    BlocProvider(
+      create: (context) => ConfigBloc()
+        ..add(SetEnvironment(
+            testMode: '',
+            paymentezClientAppCode: '',
+            paymentezClientAppKey: '')),
+      child: App(),
+    ),
+  );
+}
 
-class MyApp extends StatelessWidget {
+class App extends StatefulWidget {
+  App({Key key}) : super(key: key);
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> with AfterLayoutMixin<App> {
+  List<LocalizationsDelegate> delegates = List<LocalizationsDelegate>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    delegates = [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      DefaultCupertinoLocalizations.delegate,
+      S.delegate
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('built');
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
+      localizationsDelegates: delegates,
+      supportedLocales: [
+        const Locale('en', ''),
+      ],
+      home: BlocBuilder<ConfigBloc, ConfigState>(
+        builder: (context, state) {
+          return AddCardScreen(
+              paymentezRepository: PaymentezRepository(configState: state));
+        },
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key){
-    Paymentez().init();
-  }
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
   }
 
   @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+  void afterFirstLayout(BuildContext context) {
+    print('afterFirstLayout called');
+    Paymentez.getInstance.init(context);
   }
 }
