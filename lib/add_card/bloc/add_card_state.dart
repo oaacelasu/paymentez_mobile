@@ -13,11 +13,13 @@ class AddCardState extends Equatable {
   final bool isNameValid;
   final bool isNumberValid;
   final bool isDateExpValid;
+  final bool isCvvValid;
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
 
-  bool get isFormValid => isNumberValid;
+  bool get isFormValid =>
+      isNameValid && isNumberValid && isDateExpValid && isCvvValid;
 
   AddCardState({
     @required this.cardBin,
@@ -25,6 +27,7 @@ class AddCardState extends Equatable {
     @required this.isNameValid,
     @required this.isNumberValid,
     @required this.isDateExpValid,
+    @required this.isCvvValid,
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
@@ -37,6 +40,7 @@ class AddCardState extends Equatable {
       isNameValid: true,
       isNumberValid: true,
       isDateExpValid: true,
+      isCvvValid: true,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -48,6 +52,7 @@ class AddCardState extends Equatable {
       isNameValid: true,
       isNumberValid: true,
       isDateExpValid: true,
+      isCvvValid: true,
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
@@ -59,6 +64,7 @@ class AddCardState extends Equatable {
       isNameValid: true,
       isNumberValid: true,
       isDateExpValid: true,
+      isCvvValid: true,
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
@@ -70,19 +76,9 @@ class AddCardState extends Equatable {
       isNameValid: true,
       isNumberValid: true,
       isDateExpValid: true,
+      isCvvValid: true,
       isSubmitting: false,
       isSuccess: true,
-      isFailure: false,
-    );
-  }
-
-  AddCardState updateName({
-    bool isNameValid,
-  }) {
-    return copyWith(
-      isNameValid: isNameValid,
-      isSubmitting: false,
-      isSuccess: false,
       isFailure: false,
     );
   }
@@ -94,6 +90,7 @@ class AddCardState extends Equatable {
   }) {
     var newNumberMaskFormatter =
         MaskTextInputFormatter(mask: numberDefaultMask, filter: filter);
+
     if (number.isNotEmpty && numberMaskFormatter != null)
       newNumberMaskFormatter = numberMaskFormatter;
 
@@ -110,11 +107,15 @@ class AddCardState extends Equatable {
     );
   }
 
-  AddCardState updateDateExp({
+  AddCardState update({
+    bool isNameValid,
     bool isDateExpValid,
+    bool isCvvValid,
   }) {
     return copyWith(
+      isNameValid: isNameValid,
       isDateExpValid: isDateExpValid,
+      isCvvValid: isCvvValid,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -122,14 +123,15 @@ class AddCardState extends Equatable {
   }
 
   factory AddCardState.fromJson(Map<String, dynamic> json) => AddCardState(
-      cardBin: json['cardBin'],
-      numberMaskFormatter: json['number_mask_formatter'],
-      isNameValid: json['is_name_valid'],
-      isNumberValid: json['is_number_valid'],
-      isDateExpValid: json['is_date_exp_valid'],
-      isSubmitting: json['is_submitting'],
-      isSuccess: json['is_success'],
-      isFailure: json['is_failure']);
+      cardBin: null,
+      numberMaskFormatter: null,
+      isNameValid: null,
+      isNumberValid: null,
+      isDateExpValid: null,
+      isCvvValid: null,
+      isSubmitting: null,
+      isSuccess: null,
+      isFailure: null);
 
   AddCardState copyWith({
     CardBinModel cardBin,
@@ -137,6 +139,7 @@ class AddCardState extends Equatable {
     bool isNameValid,
     bool isNumberValid,
     bool isDateExpValid,
+    bool isCvvValid,
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
@@ -147,6 +150,7 @@ class AddCardState extends Equatable {
       isNameValid: isNameValid ?? this.isNameValid,
       isNumberValid: isNumberValid ?? this.isNumberValid,
       isDateExpValid: isDateExpValid ?? this.isDateExpValid,
+      isCvvValid: isCvvValid ?? this.isCvvValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
@@ -161,6 +165,7 @@ class AddCardState extends Equatable {
       isNameValid: $isNameValid,
       isNumberValid: $isNumberValid,
       isDateExpValid: $isDateExpValid,
+      isCvvValid: $isCvvValid,
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,
@@ -174,6 +179,7 @@ class AddCardState extends Equatable {
         isNameValid,
         isNumberValid,
         isDateExpValid,
+        isCvvValid,
         isSubmitting,
         isSuccess,
         isFailure

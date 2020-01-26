@@ -19,21 +19,41 @@ class AddCardForm extends StatefulWidget {
 }
 
 class _AddCardFormState extends State<AddCardForm> {
-  final MaskTextInputFormatter _maskTextInputFormatter =
-      MaskTextInputFormatter(mask: 'XX/XX', filter: {"X": RegExp(r'[0-9]')});
+  final MaskTextInputFormatter _maskDateExpFormatter =
+      MaskTextInputFormatter(mask: 'XX/XX', filter: AddCardState.filter);
+
   TextEditingController _nameController = TextEditingController();
   TextEditingController _numberController = TextEditingController();
   TextEditingController _dateExpController = TextEditingController();
-
+  TextEditingController _cvvController = TextEditingController();
+  final _nameFocus = FocusNode();
+  final _numberFocus = FocusNode();
+  final _dateExpFocus = FocusNode();
+  final _cvvFocus = FocusNode();
   AddCardBloc _addCardBloc;
 
   PaymentezRepository get _paymentezRepository => widget._paymentezRepository;
 
   bool get isPopulated =>
-      _nameController.text.isNotEmpty && _numberController.text.isNotEmpty;
+      _nameController.text.isNotEmpty &&
+      _numberController.text.isNotEmpty &&
+      _dateExpController.text.isNotEmpty &&
+      _cvvController.text.isNotEmpty;
 
   bool isAddCardButtonEnabled(AddCardState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
+  }
+
+  bool isNumberOk(AddCardState state) {
+    return _numberController.value.text.isNotEmpty &&
+        state.isNumberValid &&
+        _numberFocus.hasFocus;
+  }
+
+  bool isDateExpOk(AddCardState state) {
+    return _dateExpController.value.text.isNotEmpty &&
+        state.isDateExpValid &&
+        _dateExpFocus.hasFocus;
   }
 
   @override
@@ -43,6 +63,7 @@ class _AddCardFormState extends State<AddCardForm> {
     _nameController.addListener(_onNameChanged);
     _numberController.addListener(_onNumberChanged);
     _dateExpController.addListener(_onDateExpChanged);
+    _cvvController.addListener(_onCvvChanged);
   }
 
   @override
@@ -52,6 +73,10 @@ class _AddCardFormState extends State<AddCardForm> {
         if (state.isSuccess) {
           print('success');
         }
+        if (isNumberOk(state))
+          FocusScope.of(context).requestFocus(_dateExpFocus);
+        else if (isDateExpOk(state))
+          FocusScope.of(context).requestFocus(_cvvFocus);
       },
       child: BlocBuilder<AddCardBloc, AddCardState>(
         builder: (context, state) {
@@ -62,6 +87,8 @@ class _AddCardFormState extends State<AddCardForm> {
                 children: <Widget>[
                   TextFormField(
                     controller: _nameController,
+                    focusNode: _nameFocus,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       icon: Icon(Icons.person, size: 30.0),
                       labelText: 'Name',
@@ -76,9 +103,14 @@ class _AddCardFormState extends State<AddCardForm> {
                           ? 'Invalid Name'
                           : null;
                     },
+                    onFieldSubmitted: (v) {
+                      FocusScope.of(context).requestFocus(_numberFocus);
+                    },
                   ),
                   TextFormField(
                     controller: _numberController,
+                    focusNode: _numberFocus,
+                    textInputAction: TextInputAction.next,
                     inputFormatters: [state.numberMaskFormatter],
                     decoration: InputDecoration(
                       icon: cardIcon(state),
@@ -101,8 +133,12 @@ class _AddCardFormState extends State<AddCardForm> {
                           ? 'Invalid Number'
                           : null;
                     },
+                    onFieldSubmitted: (v) {
+                      FocusScope.of(context).requestFocus(_dateExpFocus);
+                    },
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
                         flex: 1,
@@ -110,7 +146,8 @@ class _AddCardFormState extends State<AddCardForm> {
                           padding: const EdgeInsets.all(8.0),
                           child: new TextFormField(
                             textInputAction: TextInputAction.next,
-                            inputFormatters: [_maskTextInputFormatter],
+                            focusNode: _dateExpFocus,
+                            inputFormatters: [_maskDateExpFormatter],
                             autovalidate: true,
                             autocorrect: false,
                             keyboardType: TextInputType.datetime,
@@ -124,6 +161,37 @@ class _AddCardFormState extends State<AddCardForm> {
                                       _dateExpController.value.text.isNotEmpty
                                   ? 'Invalid Date'
                                   : null;
+                            },
+                            onFieldSubmitted: (v) {
+                              FocusScope.of(context).requestFocus(_cvvFocus);
+                            },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new TextFormField(
+                            textInputAction: TextInputAction.done,
+                            focusNode: _cvvFocus,
+                            maxLength: 4,
+                            autovalidate: true,
+                            autocorrect: false,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.https),
+                              labelText: 'Cvv',
+                            ),
+                            controller: _cvvController,
+                            validator: (_) {
+                              return !state.isCvvValid &&
+                                      _cvvController.value.text.isNotEmpty
+                                  ? 'Invalid Cvv'
+                                  : null;
+                            },
+                            onFieldSubmitted: (v) {
+                              _onFormSubmitted();
                             },
                           ),
                         ),
@@ -191,9 +259,12 @@ class _AddCardFormState extends State<AddCardForm> {
   void _onDateExpChanged() {
     setState(() {
       _dateExpFormatter();
-      _addCardBloc.add(DateExpChanged(
-          dateExp: _dateExpController.value.text.replaceAll(' ', '')));
+      _addCardBloc.add(DateExpChanged(dateExp: _dateExpController.value.text));
     });
+  }
+
+  void _onCvvChanged() {
+    _addCardBloc.add(CvvChanged(cvv: _cvvController.value.text));
   }
 
   void _dateExpFormatter() {
@@ -201,17 +272,15 @@ class _AddCardFormState extends State<AddCardForm> {
 
     switch (text.length) {
       case 0:
-        _dateExpController.value = _maskTextInputFormatter.updateMask('XX/XX');
+        _dateExpController.value = _maskDateExpFormatter.updateMask('XX/XX');
         break;
       case 1:
         if (int.parse(text) > 1)
-          _dateExpController.value =
-              _maskTextInputFormatter.updateMask('0X/XX');
+          _dateExpController.value = _maskDateExpFormatter.updateMask('0X/XX');
         break;
       case 2:
         if (int.parse(text) > 12 || int.parse(text) == 0)
-          _dateExpController.value =
-              _maskTextInputFormatter.updateMask('0X/XX');
+          _dateExpController.value = _maskDateExpFormatter.updateMask('0X/XX');
         break;
     }
   }

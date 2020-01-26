@@ -47,6 +47,8 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
       yield* _mapNameChangedToState(event.name ?? '');
     } else if (event is DateExpChanged) {
       yield* _mapDateExpChangedToState(event.dateExp ?? '');
+    } else if (event is CvvChanged) {
+      yield* _mapCvvChangedToState(event.cvv ?? '');
     }
 //    else if (event is AddCardWithGooglePressed) {
 //      yield* _mapAddCardWithGooglePressedToState();
@@ -54,15 +56,20 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
   }
 
   Stream<AddCardState> _mapNameChangedToState(String name) async* {
-    yield state.updateName(
+    yield state.update(
       isNameValid: Validators.isValidName(name),
     );
   }
 
   Stream<AddCardState> _mapDateExpChangedToState(String dateExp) async* {
-    yield state.updateDateExp(
-      isDateExpValid: Validators.isValidName(dateExp),
+    yield state.update(
+      isDateExpValid: Validators.isValidDateExp(dateExp),
     );
+  }
+
+  Stream<AddCardState> _mapCvvChangedToState(String cvv) async* {
+    yield state.update(
+        isCvvValid: Validators.isValidCVV(cvv, state.cardBin?.cvvLength));
   }
 
   Stream<AddCardState> _mapNumberChangedToState(String number) async* {

@@ -44,6 +44,18 @@ class DateExpChanged extends AddCardEvent {
   String toString() => 'DateExpChanged { dateExp :$dateExp }';
 }
 
+class CvvChanged extends AddCardEvent {
+  final String cvv;
+
+  const CvvChanged({@required this.cvv});
+
+  @override
+  List<Object> get props => [cvv];
+
+  @override
+  String toString() => 'CvvChanged { cvv :$cvv }';
+}
+
 class Submitted extends AddCardEvent {
   final String number;
 
