@@ -1,27 +1,40 @@
+import 'package:flutter/cupertino.dart';
+import 'package:paymentez_mobile/generated/i18n.dart';
+
 class Validators {
   static final RegExp _nameRegExp = RegExp(r'^[A-Za-zÀ-ÖØ-öø-ÿ ]+$');
 
-  static isValidName(String name) {
-    return _nameRegExp.hasMatch(name);
+  static String isValidName(BuildContext context, String name) {
+    var messages = S.of(context);
+    return (!_nameRegExp.hasMatch(name)) ? messages.add_card_invalid_name : '';
   }
 
-  static isValidCVV(String value, cvvLength) {
-    return (value.isNotEmpty && value.length == cvvLength);
+  static String isValidCVV(BuildContext context, String value, cvvLength) {
+    var messages = S.of(context);
+    return (value.isEmpty || value.length != cvvLength)
+        ? messages.add_card_invalid_cvc
+        : '';
   }
 
-  static isValidDateExp(String value) {
-    return _isValidDate(value);
+  static String isValidDateExp(BuildContext context, String value) {
+    return _isValidDate(context, value);
   }
 
-  static isValidNumber(String cardType, String number, String mask) {
-    return _validateCardNum(number) &&
-        cardType.isNotEmpty &&
-        mask.replaceAll(' ', '').length == number.length;
+  static String isValidNumber(
+      BuildContext context, String cardType, String number, String mask) {
+    var messages = S.of(context);
+    return (!_validateCardNum(number) ||
+            cardType.isEmpty ||
+            mask.replaceAll(' ', '').length != number.length)
+        ? messages.add_card_invalid_number
+        : '';
   }
 
-  static _isValidDate(String value) {
+  static _isValidDate(BuildContext context, String value) {
+    var messages = S.of(context);
+
     if (value.isEmpty) {
-      return false;
+      return messages.add_card_empty_expiration_date;
     }
 
     int year;
@@ -40,12 +53,9 @@ class Validators {
       year = -1; // Lets use an invalid year intentionally
     }
 
-    print(month);
-    print(year);
-
     if ((month < 1) || (month > 12)) {
       // A valid month is between 1 (January) and 12 (December)
-      return false;
+      return messages.add_card_invalid_expiration_month;
     }
 
     var fourDigitsYear = _convertYearTo4Digits(year);
@@ -53,13 +63,13 @@ class Validators {
     if ((fourDigitsYear < 1) || (fourDigitsYear > 2099)) {
       // We are assuming a valid should be between 1 and 2099.
       // Note that, it's valid doesn't mean that it has not expired.
-      return false;
+      return messages.add_card_invalid_expiration_year;
     }
 
     if (!_hasDateExpired(month, year)) {
-      return false;
+      return messages.add_card_invalid_expiration_date;
     }
-    return true;
+    return '';
   }
 
   /// Convert the two-digit year to four-digit year if necessary

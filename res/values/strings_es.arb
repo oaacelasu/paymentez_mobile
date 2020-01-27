@@ -1,0 +1,24 @@
+{
+  "app_name" : "Paymentez SDK",
+  "add_card_name_hint" : "Jhon Doe",
+  "add_card_name_label": "Nombre del titular (igual que en la tarjeta)",
+  "add_card_invalid_name": "El Nombre del titular de la tarjeta no es válido.",
+
+  "add_card_number_hint" : "1234 1234 1234 1234",
+  "add_card_number_label" : "Número de tarjeta",
+  "add_card_invalid_number" : "El número de tarjeta no es válido.",
+
+  "add_card_expiration_date_hint" : "MM/YY",
+  "add_card_expiration_date_label" : "Fecha de vencimiento",
+  "add_card_empty_expiration_date" : " Por favor ingresa la fecha de vencimiento de la tarjeta",
+  "add_card_invalid_expiration_month" : "El mes de vencimiento de la tarjeta no es válido.",
+  "add_card_invalid_expiration_year" : "El año de vencimiento de la tarjeta no es válido.",
+  "add_card_invalid_expiration_date" : "La fecha de vencimiento de la tarjeta no es válido.",
+
+  "add_card_cvc_hint" : "123",
+  "add_card_cvc_amex_hint" : "1234",
+  "add_card_cvc_label" : "CVC",
+  "add_card_cvc_amex_label" : "CVV",
+  "add_card_invalid_cvc" : "El código de seguridad de la tarjeta no es válido."
+
+}

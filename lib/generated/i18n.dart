@@ -21,11 +21,116 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
-  String get numberCardDefaultMask => "XXXX XXXX XXXX XXXX";
+  String get add_card_cvc_amex_hint => "1234";
+  String get add_card_cvc_amex_label => "CVV";
+  String get add_card_cvc_hint => "123";
+  String get add_card_cvc_label => "CVC";
+  String get add_card_empty_expiration_date => "Please enter your card's expiration date";
+  String get add_card_expiration_date_hint => "MM/YY";
+  String get add_card_expiration_date_label => "Expiration date";
+  String get add_card_invalid_cvc => "Your card's security code is invalid.";
+  String get add_card_invalid_expiration_date => "Your card's expiration date is invalid.";
+  String get add_card_invalid_expiration_month => "Your card's expiration month is invalid.";
+  String get add_card_invalid_expiration_year => "Your card's expiration year is invalid.";
+  String get add_card_invalid_name => "Your card holder's name is invalid.";
+  String get add_card_invalid_number => "Your card's number is invalid.";
+  String get add_card_name_hint => "Jhon Doe";
+  String get add_card_name_label => "Card Holder's Name";
+  String get add_card_number_hint => "1234 1234 1234 1234";
+  String get add_card_number_label => "Card number";
+  String get app_name => "Paymentez SDK";
+}
+
+class $pt extends S {
+  const $pt();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get add_card_name_hint => "Jhon Doe";
+  @override
+  String get add_card_invalid_number => "Número do cartão Inválido.";
+  @override
+  String get add_card_name_label => "Nome do Titular do cartão";
+  @override
+  String get add_card_expiration_date_label => "Data de validade";
+  @override
+  String get add_card_invalid_expiration_month => "O mês de validade do cartão não é válido.";
+  @override
+  String get add_card_cvc_amex_label => "CVV";
+  @override
+  String get add_card_number_hint => "1234 1234 1234 1234";
+  @override
+  String get add_card_expiration_date_hint => "MM/YY";
+  @override
+  String get app_name => "Paymentez SDK";
+  @override
+  String get add_card_invalid_name => "Nome do Titular do cartão Inválido.";
+  @override
+  String get add_card_invalid_expiration_year => "O ano de validade do cartão é inválido.";
+  @override
+  String get add_card_invalid_cvc => "Cod. Segurança Inválido.";
+  @override
+  String get add_card_cvc_hint => "123";
+  @override
+  String get add_card_cvc_amex_hint => "1234";
+  @override
+  String get add_card_empty_expiration_date => "Insere a data de validade do cartão";
+  @override
+  String get add_card_number_label => "Número do cartão";
+  @override
+  String get add_card_invalid_expiration_date => "O data de validade do cartão é inválido.";
+  @override
+  String get add_card_cvc_label => "CVC";
 }
 
 class $en extends S {
   const $en();
+}
+
+class $es extends S {
+  const $es();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get add_card_name_hint => "Jhon Doe";
+  @override
+  String get add_card_invalid_number => "El número de tarjeta no es válido.";
+  @override
+  String get add_card_name_label => "Nombre del titular (igual que en la tarjeta)";
+  @override
+  String get add_card_expiration_date_label => "Fecha de vencimiento";
+  @override
+  String get add_card_invalid_expiration_month => "El mes de vencimiento de la tarjeta no es válido.";
+  @override
+  String get add_card_cvc_amex_label => "CVV";
+  @override
+  String get add_card_number_hint => "1234 1234 1234 1234";
+  @override
+  String get add_card_expiration_date_hint => "MM/YY";
+  @override
+  String get app_name => "Paymentez SDK";
+  @override
+  String get add_card_invalid_name => "El Nombre del titular de la tarjeta no es válido.";
+  @override
+  String get add_card_invalid_expiration_year => "El año de vencimiento de la tarjeta no es válido.";
+  @override
+  String get add_card_invalid_cvc => "El código de seguridad de la tarjeta no es válido.";
+  @override
+  String get add_card_cvc_hint => "123";
+  @override
+  String get add_card_cvc_amex_hint => "1234";
+  @override
+  String get add_card_empty_expiration_date => " Por favor ingresa la fecha de vencimiento de la tarjeta";
+  @override
+  String get add_card_number_label => "Número de tarjeta";
+  @override
+  String get add_card_invalid_expiration_date => "La fecha de vencimiento de la tarjeta no es válido.";
+  @override
+  String get add_card_cvc_label => "CVC";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
@@ -33,7 +138,9 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
+      Locale("pt", ""),
       Locale("en", ""),
+      Locale("es", ""),
     ];
   }
 
@@ -58,8 +165,14 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
     final String lang = getLang(locale);
     if (lang != null) {
       switch (lang) {
+        case "pt":
+          S.current = const $pt();
+          return SynchronousFuture<S>(S.current);
         case "en":
           S.current = const $en();
+          return SynchronousFuture<S>(S.current);
+        case "es":
+          S.current = const $es();
           return SynchronousFuture<S>(S.current);
         default:
           // NO-OP.

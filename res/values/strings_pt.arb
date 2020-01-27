@@ -1,0 +1,26 @@
+{
+  "app_name" : "Paymentez SDK",
+  "add_card_name_hint" : "Jhon Doe",
+  "add_card_name_label": "Nome do Titular do cartão",
+  "add_card_invalid_name": "Nome do Titular do cartão Inválido.",
+
+
+
+  "add_card_number_hint" : "1234 1234 1234 1234",
+  "add_card_number_label" : "Número do cartão",
+  "add_card_invalid_number" : "Número do cartão Inválido.",
+
+  "add_card_expiration_date_hint" : "MM/YY",
+  "add_card_expiration_date_label" : "Data de validade",
+  "add_card_empty_expiration_date" : "Insere a data de validade do cartão",
+  "add_card_invalid_expiration_month" : "O mês de validade do cartão não é válido.",
+  "add_card_invalid_expiration_year" : "O ano de validade do cartão é inválido.",
+  "add_card_invalid_expiration_date" : "O data de validade do cartão é inválido.",
+
+  "add_card_cvc_hint" : "123",
+  "add_card_cvc_amex_hint" : "1234",
+  "add_card_cvc_label" : "CVC",
+  "add_card_cvc_amex_label" : "CVV",
+  "add_card_invalid_cvc" : "Cod. Segurança Inválido."
+
+}

@@ -1,3 +1,26 @@
 {
-  "numberCardDefaultMask" : "XXXX XXXX XXXX XXXX"
+  "app_name" : "Paymentez SDK",
+  "add_card_name_hint" : "Jhon Doe",
+  "add_card_name_label": "Card Holder's Name",
+  "add_card_invalid_name": "Your card holder's name is invalid.",
+
+
+
+  "add_card_number_hint" : "1234 1234 1234 1234",
+  "add_card_number_label" : "Card number",
+  "add_card_invalid_number" : "Your card's number is invalid.",
+
+  "add_card_expiration_date_hint" : "MM/YY",
+  "add_card_expiration_date_label" : "Expiration date",
+  "add_card_empty_expiration_date" : "Please enter your card's expiration date",
+  "add_card_invalid_expiration_month" : "Your card's expiration month is invalid.",
+  "add_card_invalid_expiration_year" : "Your card's expiration year is invalid.",
+  "add_card_invalid_expiration_date" : "Your card's expiration date is invalid.",
+
+  "add_card_cvc_hint" : "123",
+  "add_card_cvc_amex_hint" : "1234",
+  "add_card_cvc_label" : "CVC",
+  "add_card_cvc_amex_label" : "CVV",
+  "add_card_invalid_cvc" : "Your card's security code is invalid."
+
 }

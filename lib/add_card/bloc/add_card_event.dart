@@ -1,17 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 abstract class AddCardEvent extends Equatable {
-  const AddCardEvent();
+  const AddCardEvent(this.context);
+  final BuildContext context;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [context];
 }
 
 class NameChanged extends AddCardEvent {
   final String name;
 
-  const NameChanged({@required this.name});
+  const NameChanged(BuildContext context, {@required this.name})
+      : super(context);
 
   @override
   List<Object> get props => [name];
@@ -23,7 +26,8 @@ class NameChanged extends AddCardEvent {
 class NumberChanged extends AddCardEvent {
   final String number;
 
-  const NumberChanged({@required this.number});
+  const NumberChanged(BuildContext context, {@required this.number})
+      : super(context);
 
   @override
   List<Object> get props => [number];
@@ -35,7 +39,8 @@ class NumberChanged extends AddCardEvent {
 class DateExpChanged extends AddCardEvent {
   final String dateExp;
 
-  const DateExpChanged({@required this.dateExp});
+  const DateExpChanged(BuildContext context, {@required this.dateExp})
+      : super(context);
 
   @override
   List<Object> get props => [dateExp];
@@ -47,7 +52,7 @@ class DateExpChanged extends AddCardEvent {
 class CvvChanged extends AddCardEvent {
   final String cvv;
 
-  const CvvChanged({@required this.cvv});
+  const CvvChanged(BuildContext context, {@required this.cvv}) : super(context);
 
   @override
   List<Object> get props => [cvv];
@@ -59,9 +64,10 @@ class CvvChanged extends AddCardEvent {
 class Submitted extends AddCardEvent {
   final String number;
 
-  const Submitted({
+  const Submitted(
+    BuildContext context, {
     @required this.number,
-  });
+  }) : super(context);
 
   @override
   List<Object> get props => [number];

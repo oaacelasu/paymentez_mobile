@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
@@ -42,37 +43,42 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
   @override
   Stream<AddCardState> mapEventToState(AddCardEvent event) async* {
     if (event is NumberChanged) {
-      yield* _mapNumberChangedToState(event.number ?? '');
+      yield* _mapNumberChangedToState(event.context, event.number ?? '');
     } else if (event is NameChanged) {
-      yield* _mapNameChangedToState(event.name ?? '');
+      yield* _mapNameChangedToState(event.context, event.name ?? '');
     } else if (event is DateExpChanged) {
-      yield* _mapDateExpChangedToState(event.dateExp ?? '');
+      yield* _mapDateExpChangedToState(event.context, event.dateExp ?? '');
     } else if (event is CvvChanged) {
-      yield* _mapCvvChangedToState(event.cvv ?? '');
+      yield* _mapCvvChangedToState(event.context, event.cvv ?? '');
     }
 //    else if (event is AddCardWithGooglePressed) {
 //      yield* _mapAddCardWithGooglePressedToState();
 //    }
   }
 
-  Stream<AddCardState> _mapNameChangedToState(String name) async* {
+  Stream<AddCardState> _mapNameChangedToState(
+      BuildContext context, String name) async* {
     yield state.update(
-      isNameValid: Validators.isValidName(name),
+      nameError: Validators.isValidName(context, name),
     );
   }
 
-  Stream<AddCardState> _mapDateExpChangedToState(String dateExp) async* {
+  Stream<AddCardState> _mapDateExpChangedToState(
+      BuildContext context, String dateExp) async* {
     yield state.update(
-      isDateExpValid: Validators.isValidDateExp(dateExp),
+      dateExpError: Validators.isValidDateExp(context, dateExp),
     );
   }
 
-  Stream<AddCardState> _mapCvvChangedToState(String cvv) async* {
+  Stream<AddCardState> _mapCvvChangedToState(
+      BuildContext context, String cvv) async* {
     yield state.update(
-        isCvvValid: Validators.isValidCVV(cvv, state.cardBin?.cvvLength));
+        cvvError:
+            Validators.isValidCVV(context, cvv, state.cardBin?.cvvLength));
   }
 
-  Stream<AddCardState> _mapNumberChangedToState(String number) async* {
+  Stream<AddCardState> _mapNumberChangedToState(
+      BuildContext context, String number) async* {
     var cardBin = number.length < 6 ? CardBinModel.fromJson({}) : state.cardBin;
     if (number.length >= 6 && number.length < 11 ||
         number.length >= 6 && state.cardBin == CardBinModel.fromJson({}))
@@ -82,7 +88,7 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     yield state.updateNumber(
       number: number,
       cardBin: cardBin,
-      isNumberValid: Validators.isValidNumber(cardBin?.cardType ?? '',
+      numberError: Validators.isValidNumber(context, cardBin?.cardType ?? '',
           number ?? '', cardBin?.cardMask ?? AddCardState.numberDefaultMask),
     );
   }

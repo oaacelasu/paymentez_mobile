@@ -10,24 +10,24 @@ class AddCardState extends Equatable {
 
   final CardBinModel cardBin;
   final MaskTextInputFormatter numberMaskFormatter;
-  final bool isNameValid;
-  final bool isNumberValid;
-  final bool isDateExpValid;
-  final bool isCvvValid;
+  final String nameError;
+  final String numberError;
+  final String dateExpError;
+  final String cvvError;
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
 
   bool get isFormValid =>
-      isNameValid && isNumberValid && isDateExpValid && isCvvValid;
+      '$nameError$numberError$dateExpError$cvvError'.isEmpty;
 
   AddCardState({
     @required this.cardBin,
     @required this.numberMaskFormatter,
-    @required this.isNameValid,
-    @required this.isNumberValid,
-    @required this.isDateExpValid,
-    @required this.isCvvValid,
+    @required this.nameError,
+    @required this.numberError,
+    @required this.dateExpError,
+    @required this.cvvError,
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
@@ -37,10 +37,10 @@ class AddCardState extends Equatable {
     return copyWith(
       numberMaskFormatter:
           MaskTextInputFormatter(mask: numberDefaultMask, filter: filter),
-      isNameValid: true,
-      isNumberValid: true,
-      isDateExpValid: true,
-      isCvvValid: true,
+      nameError: '',
+      numberError: '',
+      dateExpError: '',
+      cvvError: '',
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -49,10 +49,10 @@ class AddCardState extends Equatable {
 
   AddCardState loading() {
     return copyWith(
-      isNameValid: true,
-      isNumberValid: true,
-      isDateExpValid: true,
-      isCvvValid: true,
+      nameError: '',
+      numberError: '',
+      dateExpError: '',
+      cvvError: '',
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
@@ -61,10 +61,10 @@ class AddCardState extends Equatable {
 
   AddCardState failure() {
     return copyWith(
-      isNameValid: true,
-      isNumberValid: true,
-      isDateExpValid: true,
-      isCvvValid: true,
+      nameError: '',
+      numberError: '',
+      dateExpError: '',
+      cvvError: '',
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
@@ -73,10 +73,10 @@ class AddCardState extends Equatable {
 
   AddCardState success() {
     return copyWith(
-      isNameValid: true,
-      isNumberValid: true,
-      isDateExpValid: true,
-      isCvvValid: true,
+      nameError: '',
+      numberError: '',
+      dateExpError: '',
+      cvvError: '',
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
@@ -86,7 +86,7 @@ class AddCardState extends Equatable {
   AddCardState updateNumber({
     String number,
     CardBinModel cardBin,
-    bool isNumberValid,
+    String numberError,
   }) {
     var newNumberMaskFormatter =
         MaskTextInputFormatter(mask: numberDefaultMask, filter: filter);
@@ -100,7 +100,7 @@ class AddCardState extends Equatable {
     return copyWith(
       cardBin: cardBin,
       numberMaskFormatter: newNumberMaskFormatter,
-      isNumberValid: isNumberValid,
+      numberError: numberError,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -108,14 +108,14 @@ class AddCardState extends Equatable {
   }
 
   AddCardState update({
-    bool isNameValid,
-    bool isDateExpValid,
-    bool isCvvValid,
+    String nameError,
+    String dateExpError,
+    String cvvError,
   }) {
     return copyWith(
-      isNameValid: isNameValid,
-      isDateExpValid: isDateExpValid,
-      isCvvValid: isCvvValid,
+      nameError: nameError,
+      dateExpError: dateExpError,
+      cvvError: cvvError,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -125,10 +125,10 @@ class AddCardState extends Equatable {
   factory AddCardState.fromJson(Map<String, dynamic> json) => AddCardState(
       cardBin: null,
       numberMaskFormatter: null,
-      isNameValid: null,
-      isNumberValid: null,
-      isDateExpValid: null,
-      isCvvValid: null,
+      nameError: null,
+      numberError: null,
+      dateExpError: null,
+      cvvError: null,
       isSubmitting: null,
       isSuccess: null,
       isFailure: null);
@@ -136,10 +136,10 @@ class AddCardState extends Equatable {
   AddCardState copyWith({
     CardBinModel cardBin,
     MaskTextInputFormatter numberMaskFormatter,
-    bool isNameValid,
-    bool isNumberValid,
-    bool isDateExpValid,
-    bool isCvvValid,
+    String nameError,
+    String numberError,
+    String dateExpError,
+    String cvvError,
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
@@ -147,10 +147,10 @@ class AddCardState extends Equatable {
     return AddCardState(
       cardBin: cardBin ?? this.cardBin,
       numberMaskFormatter: numberMaskFormatter ?? this.numberMaskFormatter,
-      isNameValid: isNameValid ?? this.isNameValid,
-      isNumberValid: isNumberValid ?? this.isNumberValid,
-      isDateExpValid: isDateExpValid ?? this.isDateExpValid,
-      isCvvValid: isCvvValid ?? this.isCvvValid,
+      nameError: nameError ?? this.nameError,
+      numberError: numberError ?? this.numberError,
+      dateExpError: dateExpError ?? this.dateExpError,
+      cvvError: cvvError ?? this.cvvError,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
@@ -162,10 +162,10 @@ class AddCardState extends Equatable {
     return '''AddCardState {
       cardBin: $cardBin,
       numberMaskFormatter: ${numberMaskFormatter.getMaskedText()},
-      isNameValid: $isNameValid,
-      isNumberValid: $isNumberValid,
-      isDateExpValid: $isDateExpValid,
-      isCvvValid: $isCvvValid,
+      nameError: $nameError,
+      numberError: $numberError,
+      dateExpError: $dateExpError,
+      cvvError: $cvvError,
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,
@@ -176,10 +176,10 @@ class AddCardState extends Equatable {
   List<Object> get props => [
         cardBin,
         numberMaskFormatter,
-        isNameValid,
-        isNumberValid,
-        isDateExpValid,
-        isCvvValid,
+        nameError,
+        numberError,
+        dateExpError,
+        cvvError,
         isSubmitting,
         isSuccess,
         isFailure

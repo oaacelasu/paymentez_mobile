@@ -54,7 +54,9 @@ class _AppState extends State<App> with AfterLayoutMixin<App> {
     return MaterialApp(
       localizationsDelegates: delegates,
       supportedLocales: [
+        const Locale('es', ''),
         const Locale('en', ''),
+        const Locale('pt', ''),
       ],
       home: BlocBuilder<ConfigBloc, ConfigState>(
         builder: (context, state) {
