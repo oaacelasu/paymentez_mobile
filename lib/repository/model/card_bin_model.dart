@@ -9,6 +9,7 @@ class CardBinModel extends Equatable {
   final String urlLogo;
   final List<dynamic> installmentsOptions;
   final int cvvLength;
+  final bool useLuhn;
   final String cardMask;
   final String cardType;
   final bool otp;
@@ -19,6 +20,7 @@ class CardBinModel extends Equatable {
     @required String urlLogo,
     @required List<dynamic> installmentsOptions,
     @required int cvvLength,
+    @required bool useLuhn,
     @required String cardMask,
     @required String cardType,
     @required bool otp,
@@ -27,6 +29,7 @@ class CardBinModel extends Equatable {
         urlLogo = urlLogo,
         installmentsOptions = installmentsOptions,
         cvvLength = cvvLength,
+        useLuhn = useLuhn,
         cardMask = cardMask,
         cardType = cardType,
         otp = otp;
@@ -37,6 +40,7 @@ class CardBinModel extends Equatable {
     String urlLogo,
     List<dynamic> installmentsOptions,
     int cvvLength,
+    bool useLuhn,
     String cardMask,
     MaskTextInputFormatter numberMaskFormatter,
     String cardType,
@@ -48,6 +52,7 @@ class CardBinModel extends Equatable {
           urlLogo: urlLogo ?? this.urlLogo,
           installmentsOptions: installmentsOptions ?? this.installmentsOptions,
           cvvLength: cvvLength ?? this.cvvLength,
+          useLuhn: useLuhn ?? useLuhn,
           cardMask: cardMask ?? this.cardMask,
           cardType: cardType ?? this.cardType,
           otp: otp ?? this.otp);
@@ -58,25 +63,27 @@ class CardBinModel extends Equatable {
         'url_logo': this.urlLogo,
         'installments_options': this.installmentsOptions,
         'cvv_length': this.cvvLength,
+        'use_luhn': this.useLuhn,
         'card_mask': this.cardMask,
         'card_type': this.cardType,
         'otp': this.otp
       };
 
   factory CardBinModel.fromJson(Map<String, dynamic> json) => CardBinModel(
-        carrier: json['carrier']?.toString(),
-        urlLogoPng: json['url_logo_png'],
-        urlLogo: json['url_logo'],
-        installmentsOptions: json['installments_options'],
-        cvvLength: json['cvv_length'],
-        cardMask: json['card_mask'],
-        cardType: json['card_type'],
-        otp: json['otp'],
+        carrier: json['carrier']?.toString() ?? '0',
+        urlLogoPng: json['url_logo_png'] ?? '',
+        urlLogo: json['url_logo'] ?? '',
+        installmentsOptions: json['installments_options'] ?? [],
+        cvvLength: json['cvv_length'] ?? 3,
+        useLuhn: json['use_luhn'] ?? true,
+        cardMask: json['card_mask'] ?? 'XXXX XXXX XXXX XXXX',
+        cardType: json['card_type'] ?? '',
+        otp: json['otp'] ?? true,
       );
 
   @override
   String toString() {
-    return 'CardBinModel{carrier: $carrier, urlLogoPng: $urlLogoPng, urlLogo: $urlLogo, installmentsOptions: $installmentsOptions, cvvLength: $cvvLength, cardMask: $cardMask, cardType: $cardType, otp: $otp}';
+    return 'CardBinModel{carrier: $carrier, urlLogoPng: $urlLogoPng, urlLogo: $urlLogo, installmentsOptions: $installmentsOptions, cvvLength: $cvvLength, cardMask: $cardMask, cardType: $cardType, otp: $otp, use_luhn: $useLuhn}';
   }
 
   @override
@@ -86,6 +93,7 @@ class CardBinModel extends Equatable {
         urlLogo,
         installmentsOptions,
         cvvLength,
+        useLuhn,
         cardMask,
         cardType,
         otp,

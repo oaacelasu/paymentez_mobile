@@ -28,16 +28,20 @@ class S implements WidgetsLocalizations {
   String get add_card_empty_expiration_date => "Please enter your card's expiration date";
   String get add_card_expiration_date_hint => "MM/YY";
   String get add_card_expiration_date_label => "Expiration date";
+  String get add_card_fiscal_number_label => "Fiscal number";
   String get add_card_invalid_cvc => "Your card's security code is invalid.";
   String get add_card_invalid_expiration_date => "Your card's expiration date is invalid.";
   String get add_card_invalid_expiration_month => "Your card's expiration month is invalid.";
   String get add_card_invalid_expiration_year => "Your card's expiration year is invalid.";
+  String get add_card_invalid_fiscal_number => "Your fiscal number is invalid.";
   String get add_card_invalid_name => "Your card holder's name is invalid.";
   String get add_card_invalid_number => "Your card's number is invalid.";
+  String get add_card_invalid_tuya_code => "Invalid password";
   String get add_card_name_hint => "Jhon Doe";
   String get add_card_name_label => "Card Holder's Name";
   String get add_card_number_hint => "1234 1234 1234 1234";
   String get add_card_number_label => "Card number";
+  String get add_card_tuya_code_label => "Tuya password";
   String get app_name => "Paymentez SDK";
 }
 
@@ -62,11 +66,15 @@ class $pt extends S {
   @override
   String get add_card_number_hint => "1234 1234 1234 1234";
   @override
+  String get add_card_tuya_code_label => "Senha Tuya";
+  @override
   String get add_card_expiration_date_hint => "MM/YY";
   @override
   String get app_name => "Paymentez SDK";
   @override
   String get add_card_invalid_name => "Nome do Titular do cartão Inválido.";
+  @override
+  String get add_card_fiscal_number_label => "Documento de identificação";
   @override
   String get add_card_invalid_expiration_year => "O ano de validade do cartão é inválido.";
   @override
@@ -81,6 +89,10 @@ class $pt extends S {
   String get add_card_number_label => "Número do cartão";
   @override
   String get add_card_invalid_expiration_date => "O data de validade do cartão é inválido.";
+  @override
+  String get add_card_invalid_fiscal_number => "Documento de identificação inválido";
+  @override
+  String get add_card_invalid_tuya_code => "Senha Inválida.";
   @override
   String get add_card_cvc_label => "CVC";
 }
@@ -102,7 +114,7 @@ class $es extends S {
   @override
   String get add_card_name_label => "Nombre del titular (igual que en la tarjeta)";
   @override
-  String get add_card_expiration_date_label => "Fecha de vencimiento";
+  String get add_card_expiration_date_label => "Fecha de vto.";
   @override
   String get add_card_invalid_expiration_month => "El mes de vencimiento de la tarjeta no es válido.";
   @override
@@ -110,11 +122,15 @@ class $es extends S {
   @override
   String get add_card_number_hint => "1234 1234 1234 1234";
   @override
+  String get add_card_tuya_code_label => "Clave Tuya";
+  @override
   String get add_card_expiration_date_hint => "MM/YY";
   @override
   String get app_name => "Paymentez SDK";
   @override
   String get add_card_invalid_name => "El Nombre del titular de la tarjeta no es válido.";
+  @override
+  String get add_card_fiscal_number_label => "Documento de Identificación";
   @override
   String get add_card_invalid_expiration_year => "El año de vencimiento de la tarjeta no es válido.";
   @override
@@ -129,6 +145,10 @@ class $es extends S {
   String get add_card_number_label => "Número de tarjeta";
   @override
   String get add_card_invalid_expiration_date => "La fecha de vencimiento de la tarjeta no es válido.";
+  @override
+  String get add_card_invalid_fiscal_number => "El documento de Identificación no es valido.";
+  @override
+  String get add_card_invalid_tuya_code => "Clave invalida.";
   @override
   String get add_card_cvc_label => "CVC";
 }

@@ -3,10 +3,25 @@ import 'package:paymentez_mobile/generated/i18n.dart';
 
 class Validators {
   static final RegExp _nameRegExp = RegExp(r'^[A-Za-zÀ-ÖØ-öø-ÿ ]+$');
+  static final RegExp _numericRegExp = RegExp(r'^[0-9]+$');
 
   static String isValidName(BuildContext context, String name) {
     var messages = S.of(context);
     return (!_nameRegExp.hasMatch(name)) ? messages.add_card_invalid_name : '';
+  }
+
+  static String isValidFiscalNumber(BuildContext context, String name) {
+    var messages = S.of(context);
+    return (!_numericRegExp.hasMatch(name))
+        ? messages.add_card_invalid_fiscal_number
+        : '';
+  }
+
+  static String isValidTuyaCode(BuildContext context, String name) {
+    var messages = S.of(context);
+    return (!_numericRegExp.hasMatch(name))
+        ? messages.add_card_invalid_tuya_code
+        : '';
   }
 
   static String isValidCVV(BuildContext context, String value, cvvLength) {
@@ -20,10 +35,10 @@ class Validators {
     return _isValidDate(context, value);
   }
 
-  static String isValidNumber(
-      BuildContext context, String cardType, String number, String mask) {
+  static String isValidNumber(BuildContext context, String cardType,
+      String number, String mask, bool useLuhn) {
     var messages = S.of(context);
-    return (!_validateCardNum(number) ||
+    return ((!_validateCardNum(number) && useLuhn) ||
             cardType.isEmpty ||
             mask.replaceAll(' ', '').length != number.length)
         ? messages.add_card_invalid_number

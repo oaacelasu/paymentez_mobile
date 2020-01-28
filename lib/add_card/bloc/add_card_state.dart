@@ -14,6 +14,8 @@ class AddCardState extends Equatable {
   final String numberError;
   final String dateExpError;
   final String cvvError;
+  final String fiscalNumberError;
+  final String tuyaCodeError;
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
@@ -28,6 +30,8 @@ class AddCardState extends Equatable {
     @required this.numberError,
     @required this.dateExpError,
     @required this.cvvError,
+    @required this.fiscalNumberError,
+    @required this.tuyaCodeError,
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
@@ -37,10 +41,13 @@ class AddCardState extends Equatable {
     return copyWith(
       numberMaskFormatter:
           MaskTextInputFormatter(mask: numberDefaultMask, filter: filter),
+      cardBin: CardBinModel.fromJson({}),
       nameError: '',
       numberError: '',
       dateExpError: '',
       cvvError: '',
+      fiscalNumberError: '',
+      tuyaCodeError: '',
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -53,6 +60,8 @@ class AddCardState extends Equatable {
       numberError: '',
       dateExpError: '',
       cvvError: '',
+      fiscalNumberError: '',
+      tuyaCodeError: '',
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
@@ -65,6 +74,8 @@ class AddCardState extends Equatable {
       numberError: '',
       dateExpError: '',
       cvvError: '',
+      fiscalNumberError: '',
+      tuyaCodeError: '',
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
@@ -77,6 +88,8 @@ class AddCardState extends Equatable {
       numberError: '',
       dateExpError: '',
       cvvError: '',
+      fiscalNumberError: '',
+      tuyaCodeError: '',
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
@@ -107,15 +120,18 @@ class AddCardState extends Equatable {
     );
   }
 
-  AddCardState update({
-    String nameError,
-    String dateExpError,
-    String cvvError,
-  }) {
+  AddCardState update(
+      {String nameError,
+      String dateExpError,
+      String cvvError,
+      String fiscalNumberError,
+      String tuyaCodeError}) {
     return copyWith(
       nameError: nameError,
       dateExpError: dateExpError,
       cvvError: cvvError,
+      fiscalNumberError: fiscalNumberError,
+      tuyaCodeError: tuyaCodeError,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -129,6 +145,8 @@ class AddCardState extends Equatable {
       numberError: null,
       dateExpError: null,
       cvvError: null,
+      fiscalNumberError: null,
+      tuyaCodeError: null,
       isSubmitting: null,
       isSuccess: null,
       isFailure: null);
@@ -140,6 +158,8 @@ class AddCardState extends Equatable {
     String numberError,
     String dateExpError,
     String cvvError,
+    String fiscalNumberError,
+    String tuyaCodeError,
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
@@ -151,6 +171,8 @@ class AddCardState extends Equatable {
       numberError: numberError ?? this.numberError,
       dateExpError: dateExpError ?? this.dateExpError,
       cvvError: cvvError ?? this.cvvError,
+      fiscalNumberError: fiscalNumberError ?? this.fiscalNumberError,
+      tuyaCodeError: tuyaCodeError ?? this.tuyaCodeError,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
@@ -166,6 +188,8 @@ class AddCardState extends Equatable {
       numberError: $numberError,
       dateExpError: $dateExpError,
       cvvError: $cvvError,
+      fiscalNumberError: $fiscalNumberError, 
+      tuyaCodeError: $tuyaCodeError,
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,
@@ -179,6 +203,8 @@ class AddCardState extends Equatable {
         nameError,
         numberError,
         dateExpError,
+        fiscalNumberError,
+        tuyaCodeError,
         cvvError,
         isSubmitting,
         isSuccess,

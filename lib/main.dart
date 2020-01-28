@@ -50,7 +50,6 @@ class _AppState extends State<App> with AfterLayoutMixin<App> {
 
   @override
   Widget build(BuildContext context) {
-    print('built');
     return MaterialApp(
       localizationsDelegates: delegates,
       supportedLocales: [

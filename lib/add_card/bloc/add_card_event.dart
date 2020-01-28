@@ -61,6 +61,32 @@ class CvvChanged extends AddCardEvent {
   String toString() => 'CvvChanged { cvv :$cvv }';
 }
 
+class FiscalNumberChanged extends AddCardEvent {
+  final String fiscalNumber;
+
+  const FiscalNumberChanged(BuildContext context, {@required this.fiscalNumber})
+      : super(context);
+
+  @override
+  List<Object> get props => [fiscalNumber];
+
+  @override
+  String toString() => 'FiscalNumberChanged { fiscalNumber :$fiscalNumber }';
+}
+
+class TuyaCodeChanged extends AddCardEvent {
+  final String tuyaCode;
+
+  const TuyaCodeChanged(BuildContext context, {@required this.tuyaCode})
+      : super(context);
+
+  @override
+  List<Object> get props => [tuyaCode];
+
+  @override
+  String toString() => 'TuyaCodeChanged { tuyaCode :$tuyaCode}';
+}
+
 class Submitted extends AddCardEvent {
   final String number;
 

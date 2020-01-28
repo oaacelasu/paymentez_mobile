@@ -50,6 +50,11 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
       yield* _mapDateExpChangedToState(event.context, event.dateExp ?? '');
     } else if (event is CvvChanged) {
       yield* _mapCvvChangedToState(event.context, event.cvv ?? '');
+    } else if (event is FiscalNumberChanged) {
+      yield* _mapFiscalNumberChangedToState(
+          event.context, event.fiscalNumber ?? '');
+    } else if (event is TuyaCodeChanged) {
+      yield* _mapTuyaCodeChangedToState(event.context, event.tuyaCode ?? '');
     }
 //    else if (event is AddCardWithGooglePressed) {
 //      yield* _mapAddCardWithGooglePressedToState();
@@ -77,6 +82,20 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
             Validators.isValidCVV(context, cvv, state.cardBin?.cvvLength));
   }
 
+  Stream<AddCardState> _mapFiscalNumberChangedToState(
+      BuildContext context, String fiscalNumber) async* {
+    yield state.update(
+      fiscalNumberError: Validators.isValidFiscalNumber(context, fiscalNumber),
+    );
+  }
+
+  Stream<AddCardState> _mapTuyaCodeChangedToState(
+      BuildContext context, String tuyaCode) async* {
+    yield state.update(
+      tuyaCodeError: Validators.isValidTuyaCode(context, tuyaCode),
+    );
+  }
+
   Stream<AddCardState> _mapNumberChangedToState(
       BuildContext context, String number) async* {
     var cardBin = number.length < 6 ? CardBinModel.fromJson({}) : state.cardBin;
@@ -88,8 +107,12 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     yield state.updateNumber(
       number: number,
       cardBin: cardBin,
-      numberError: Validators.isValidNumber(context, cardBin?.cardType ?? '',
-          number ?? '', cardBin?.cardMask ?? AddCardState.numberDefaultMask),
+      numberError: Validators.isValidNumber(
+          context,
+          cardBin?.cardType ?? '',
+          number ?? '',
+          cardBin?.cardMask ?? AddCardState.numberDefaultMask,
+          cardBin?.useLuhn ?? true),
     );
   }
 

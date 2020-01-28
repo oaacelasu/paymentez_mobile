@@ -21,6 +21,10 @@
   "add_card_cvc_amex_hint" : "1234",
   "add_card_cvc_label" : "CVC",
   "add_card_cvc_amex_label" : "CVV",
-  "add_card_invalid_cvc" : "Cod. Segurança Inválido."
+  "add_card_invalid_cvc" : "Cod. Segurança Inválido.",
+  "add_card_fiscal_number_label" : "Documento de identificação",
+  "add_card_invalid_fiscal_number" : "Documento de identificação inválido",
 
+  "add_card_tuya_code_label" : "Senha Tuya",
+  "add_card_invalid_tuya_code" : "Senha Inválida."
 }
