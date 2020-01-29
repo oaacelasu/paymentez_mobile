@@ -1,13 +1,13 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
-import 'package:paymentez_mobile/repository/paymentez_repository.dart';
+import 'package:paymentez_mobile/config/routes.dart';
 import 'package:paymentez_mobile/simple_bloc_delegate.dart';
 
-import 'add_card/add_card_screen.dart';
 import 'channel/paymentez_channel.dart';
 import 'generated/i18n.dart';
 
@@ -50,20 +50,18 @@ class _AppState extends State<App> with AfterLayoutMixin<App> {
 
   @override
   Widget build(BuildContext context) {
+    final router = new Router();
+    Routes.configureRoutes(router);
+
     return MaterialApp(
-      localizationsDelegates: delegates,
-      supportedLocales: [
-        const Locale('es', ''),
-        const Locale('en', ''),
-        const Locale('pt', ''),
-      ],
-      home: BlocBuilder<ConfigBloc, ConfigState>(
-        builder: (context, state) {
-          return AddCardScreen(
-              paymentezRepository: PaymentezRepository(configState: state));
-        },
-      ),
-    );
+        localizationsDelegates: delegates,
+        initialRoute: Routes.addCard,
+        supportedLocales: [
+          const Locale('es', ''),
+          const Locale('en', ''),
+          const Locale('pt', ''),
+        ],
+        onGenerateRoute: router.generator);
   }
 
   @override

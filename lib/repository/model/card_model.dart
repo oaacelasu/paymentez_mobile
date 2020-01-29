@@ -71,18 +71,13 @@ class CardModel extends Equatable {
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'bin': this.bin,
-        'status': this.status,
-        'token': this.token,
-        'message': this.message,
-        'expiry_year': this.expiryYear,
-        'expiry_month': this.expiryMonth,
-        'transaction_reference': this.transactionReference,
-        'type': this.type,
-        'number': this.number,
-        'origin': this.origin,
-        'holder_name': this.holderName,
-        'cvc': this.cvc,
+        'expiry_year': int.parse(this.expiryYear) ?? 0,
+        'expiry_month': int.parse(this.expiryMonth) ?? 0,
+        'type': this.type ?? '',
+        'number': this.number ?? '',
+        'holder_name': this.holderName ?? '',
+        "last4": this.number.substring(number.length - 4) ?? '',
+        'cvc': this.cvc ?? '',
       };
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(

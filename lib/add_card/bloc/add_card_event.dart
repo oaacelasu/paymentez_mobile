@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:paymentez_mobile/repository/model/card_model.dart';
 
 abstract class AddCardEvent extends Equatable {
   const AddCardEvent(this.context);
@@ -88,18 +90,18 @@ class TuyaCodeChanged extends AddCardEvent {
 }
 
 class Submitted extends AddCardEvent {
-  final String number;
+  final CardModel card;
 
   const Submitted(
     BuildContext context, {
-    @required this.number,
+    @required this.card,
   }) : super(context);
 
   @override
-  List<Object> get props => [number];
+  List<Object> get props => [card];
 
   @override
   String toString() {
-    return 'Submitted { number: $number}';
+    return 'Submitted { card: $card}';
   }
 }

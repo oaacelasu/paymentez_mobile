@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_kount/flutter_kount.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
 import 'package:paymentez_mobile/utils/repository_utils.dart';
 
@@ -9,14 +10,18 @@ import 'model/user.dart';
 
 class PaymentezRepository {
   final ConfigState _configState;
+  final User _user;
   final Dio _dio;
 
-  PaymentezRepository({ConfigState configState})
+  PaymentezRepository({ConfigState configState, User user})
       : _configState = configState ?? DevModeState('', ''),
+        _user = user,
         _dio = Dio() {
     _dio.options.baseUrl = configState.baseUrl;
     _dio.options.connectTimeout = 30 * 1000;
     _dio.options.receiveTimeout = 30 * 1000;
+    _dio.interceptors
+        .add(LogInterceptor(requestBody: true, responseBody: true)); //开启请求日志
     _dio.options.headers = {
       "Content-Type": "application/json",
       "Auth-Token": RepositoryUtils.getAuthToken(
@@ -24,12 +29,17 @@ class PaymentezRepository {
     };
   }
 
-  Future<void> createToken(
-      {@required String sessionId,
-      @required User user,
-      @required CardModel card}) async {
+  Future<void> createToken(BuildContext context,
+      {@required String sessionId, @required CardModel card}) async {
     try {
-      Response response = await Dio().get(_configState.baseUrl);
+      print('${_configState.baseUrl}/v2/card/add');
+
+      Response response = await _dio.post('/v2/card/add', data: {
+        "session_id": await FlutterKount.sessionId,
+        "card": card.toJson(),
+        "user": _user.toJson(),
+      });
+
       print(response);
     } catch (e) {
       print(e);

@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  fluro:
+    dependency: "direct main"
+    description:
+      name: fluro
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -104,6 +111,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  flutter_kount:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "9358ef0c1f5f5ca6c13e06b09ffe6467a672b85a"
+      url: "git://github.com/oaacelasu/flutter_kount.git"
+    source: git
+    version: "0.0.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter

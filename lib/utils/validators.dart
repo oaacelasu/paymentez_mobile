@@ -73,7 +73,7 @@ class Validators {
       return messages.add_card_invalid_expiration_month;
     }
 
-    var fourDigitsYear = _convertYearTo4Digits(year);
+    var fourDigitsYear = convertYearTo4Digits(year);
     print(fourDigitsYear);
     if ((fourDigitsYear < 1) || (fourDigitsYear > 2099)) {
       // We are assuming a valid should be between 1 and 2099.
@@ -88,7 +88,7 @@ class Validators {
   }
 
   /// Convert the two-digit year to four-digit year if necessary
-  static int _convertYearTo4Digits(int year) {
+  static int convertYearTo4Digits(int year) {
     if (year < 100 && year >= 0) {
       var now = DateTime.now();
       String currentYear = now.year.toString();
@@ -119,11 +119,11 @@ class Validators {
     // has passed
     // 2. Card's month (plus another month) is more than current month.
     return _hasYearPassed(year) ||
-        _convertYearTo4Digits(year) == now.year && (month < now.month + 1);
+        convertYearTo4Digits(year) == now.year && (month < now.month + 1);
   }
 
   static bool _hasYearPassed(int year) {
-    int fourDigitsYear = _convertYearTo4Digits(year);
+    int fourDigitsYear = convertYearTo4Digits(year);
     var now = DateTime.now();
     // The year has passed if the year we are currently is more than card's
     // year

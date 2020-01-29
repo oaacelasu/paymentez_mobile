@@ -7,7 +7,7 @@ import './bloc.dart';
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   @override
   ConfigState get initialState =>
-      DevModeState("IOS-CO-CLIENT", "AKKqsezFDHtanNv1G0ARyxb8DiYARE");
+      StgModeState("IOS-CO-CLIENT", "AKKqsezFDHtanNv1G0ARyxb8DiYARE");
 
   @override
   Stream<ConfigState> mapEventToState(

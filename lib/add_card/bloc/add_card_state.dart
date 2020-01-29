@@ -183,7 +183,7 @@ class AddCardState extends Equatable {
   String toString() {
     return '''AddCardState {
       cardBin: $cardBin,
-      numberMaskFormatter: ${numberMaskFormatter.getMaskedText()},
+      numberMaskFormatter: ${numberMaskFormatter?.getMaskedText()},
       nameError: $nameError,
       numberError: $numberError,
       dateExpError: $dateExpError,

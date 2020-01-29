@@ -32,10 +32,8 @@ class User extends Equatable {
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': this.id,
-        'email': this.email,
-        'ip_address': this.ipAddress,
-        'fiscal_number': this.fiscalNumber,
+        'id': this.id ?? 'uid12345',
+        'email': this.email ?? 'dev@paymentez.com',
       };
 
   factory User.fromJson(Map<String, dynamic> json) => User(

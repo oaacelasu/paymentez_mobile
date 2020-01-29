@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:paymentez_mobile/generated/i18n.dart';
+import 'package:paymentez_mobile/repository/model/card_model.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
+import 'package:paymentez_mobile/utils/validators.dart';
 
 import 'add_card_button.dart';
 import 'bloc/bloc.dart';
@@ -395,11 +397,29 @@ class _AddCardFormState extends State<AddCardForm> {
 
   void _onFormSubmitted() {
     print('_onFormSubmitted');
-//    _AddCardBloc.add(
-//      AddCardWithCredentialsPressed(
-//        email: _emailController.text,
-//        password: _passwordController.text,
-//      ),
-//    );
+    var card = CardModel(
+        bin: null,
+        status: null,
+        token: null,
+        message: null,
+        expiryYear: Validators.convertYearTo4Digits(int.parse(_dateExpController
+                .value.text
+                .split(RegExp(r'(\/)'))
+                .elementAt(1)))
+            .toString(),
+        expiryMonth:
+            _dateExpController.value.text.split(RegExp(r'(\/)')).elementAt(0),
+        transactionReference: null,
+        type: _addCardBloc.state.cardBin?.cardType,
+        number: _numberController.value.text.replaceAll(' ', ''),
+        origin: null,
+        holderName: _nameController.value.text,
+        cvc: _cvvController.value.text);
+    _addCardBloc.add(
+      Submitted(
+        context,
+        card: card,
+      ),
+    );
   }
 }

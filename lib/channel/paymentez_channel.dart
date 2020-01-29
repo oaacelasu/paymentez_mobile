@@ -7,6 +7,8 @@ import 'package:paymentez_mobile/config/bloc.dart';
 
 class Paymentez {
   static const MethodChannel _channel = const MethodChannel('paymentez');
+  static const MethodChannel _kountChannel = const MethodChannel('kount');
+
   static Paymentez _instance = new Paymentez();
 
   static Paymentez get getInstance => _instance;
@@ -14,6 +16,10 @@ class Paymentez {
 
   Future<void> init(BuildContext context) async =>
       _channel.setMethodCallHandler((call) => _handleMethod(call, context));
+
+  Future<String> getSessionId(BuildContext context, bool testMode) async =>
+      _kountChannel.invokeMethod(
+          "getSessionId", <String, dynamic>{"test_mode": testMode});
 
   Future<dynamic> _handleMethod(MethodCall call, BuildContext context) async {
     _configBloc = BlocProvider.of<ConfigBloc>(context);

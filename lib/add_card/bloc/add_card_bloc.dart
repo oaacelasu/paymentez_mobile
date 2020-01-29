@@ -5,6 +5,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
+import 'package:paymentez_mobile/repository/model/card_model.dart';
+import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
 import 'package:rxdart/rxdart.dart';
@@ -29,10 +31,10 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     Stream<AddCardState> Function(AddCardEvent event) next,
   ) {
     final nonDebounceStream = events.where((event) {
-      return (event is! NumberChanged);
+      return (event is! NameChanged);
     });
     final debounceStream = events.where((event) {
-      return (event is NumberChanged);
+      return (event is NameChanged);
     }).debounceTime(Duration(milliseconds: 300));
     return super.transformEvents(
       nonDebounceStream.mergeWith([debounceStream]),
@@ -55,10 +57,10 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
           event.context, event.fiscalNumber ?? '');
     } else if (event is TuyaCodeChanged) {
       yield* _mapTuyaCodeChangedToState(event.context, event.tuyaCode ?? '');
+    } else if (event is Submitted) {
+      yield* _mapSummitedToState(event.context,
+          sessionId: '', card: event.card);
     }
-//    else if (event is AddCardWithGooglePressed) {
-//      yield* _mapAddCardWithGooglePressedToState();
-//    }
   }
 
   Stream<AddCardState> _mapNameChangedToState(
@@ -116,16 +118,19 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     );
   }
 
-//  Stream<AddCardState> _mapAddCardWithCredentialsPressedToState({
-//    String email,
-//    String password,
-//  }) async* {
-//    yield AddCardState.loading();
-//    try {
-//      await _paymentezRepository.signInWithCredentials(email, password);
-//      yield AddCardState.success();
-//    } catch (_) {
-//      yield AddCardState.failure();
-//    }
-//  }
+  Stream<AddCardState> _mapSummitedToState(
+    BuildContext context, {
+    String sessionId,
+    User user,
+    CardModel card,
+  }) async* {
+    yield AddCardState.fromJson({}).loading();
+    try {
+      await _paymentezRepository.createToken(context,
+          sessionId: sessionId, card: card);
+      yield AddCardState.fromJson({}).success();
+    } catch (_) {
+      yield AddCardState.fromJson({}).failure();
+    }
+  }
 }
