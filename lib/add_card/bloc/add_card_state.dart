@@ -19,9 +19,13 @@ class AddCardState extends Equatable {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
+  final String message;
 
   bool get isFormValid =>
       '$nameError$numberError$dateExpError$cvvError'.isEmpty;
+
+  bool get isTuyaFormValid =>
+      '$nameError$numberError$fiscalNumberError$tuyaCodeError'.isEmpty;
 
   AddCardState({
     @required this.cardBin,
@@ -35,6 +39,7 @@ class AddCardState extends Equatable {
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
+    @required this.message,
   });
 
   AddCardState empty() {
@@ -42,57 +47,43 @@ class AddCardState extends Equatable {
       numberMaskFormatter:
           MaskTextInputFormatter(mask: numberDefaultMask, filter: filter),
       cardBin: CardBinModel.fromJson({}),
-      nameError: '',
-      numberError: '',
-      dateExpError: '',
-      cvvError: '',
-      fiscalNumberError: '',
-      tuyaCodeError: '',
+      nameError: ' ',
+      numberError: ' ',
+      dateExpError: ' ',
+      cvvError: ' ',
+      fiscalNumberError: ' ',
+      tuyaCodeError: ' ',
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
+      message: '',
     );
   }
 
   AddCardState loading() {
     return copyWith(
-      nameError: '',
-      numberError: '',
-      dateExpError: '',
-      cvvError: '',
-      fiscalNumberError: '',
-      tuyaCodeError: '',
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
+      message:''
     );
   }
 
-  AddCardState failure() {
+  AddCardState failure(String message) {
     return copyWith(
-      nameError: '',
-      numberError: '',
-      dateExpError: '',
-      cvvError: '',
-      fiscalNumberError: '',
-      tuyaCodeError: '',
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
+      message:message,
     );
   }
 
-  AddCardState success() {
+  AddCardState success(String message) {
     return copyWith(
-      nameError: '',
-      numberError: '',
-      dateExpError: '',
-      cvvError: '',
-      fiscalNumberError: '',
-      tuyaCodeError: '',
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
+      message:message,
     );
   }
 
@@ -117,6 +108,7 @@ class AddCardState extends Equatable {
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
+      message:'',
     );
   }
 
@@ -149,7 +141,7 @@ class AddCardState extends Equatable {
       tuyaCodeError: null,
       isSubmitting: null,
       isSuccess: null,
-      isFailure: null);
+      isFailure: null, message: null);
 
   AddCardState copyWith({
     CardBinModel cardBin,
@@ -163,6 +155,7 @@ class AddCardState extends Equatable {
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
+    String message,
   }) {
     return AddCardState(
       cardBin: cardBin ?? this.cardBin,
@@ -176,6 +169,7 @@ class AddCardState extends Equatable {
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
+      message: message ?? this.message
     );
   }
 
@@ -193,6 +187,7 @@ class AddCardState extends Equatable {
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,
+      message: $message
     }''';
   }
 
@@ -208,6 +203,7 @@ class AddCardState extends Equatable {
         cvvError,
         isSubmitting,
         isSuccess,
-        isFailure
+        isFailure,
+    message
       ];
 }

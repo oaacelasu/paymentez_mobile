@@ -29,9 +29,8 @@ class PaymentezRepository {
     };
   }
 
-  Future<void> createToken(BuildContext context,
+  Future<Response> createToken(BuildContext context,
       {@required String sessionId, @required CardModel card}) async {
-    try {
       print('${_configState.baseUrl}/v2/card/add');
 
       Response response = await _dio.post('/v2/card/add', data: {
@@ -40,10 +39,8 @@ class PaymentezRepository {
         "user": _user.toJson(),
       });
 
-      print(response);
-    } catch (e) {
-      print(e);
-    }
+      return response;
+
   }
 
   Future<CardBinModel> getCardBin({@required String bin}) async {

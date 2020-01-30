@@ -53,7 +53,7 @@ class _AddCardFormState extends State<AddCardForm> {
           _tuyaCodeController.text.isNotEmpty);
 
   bool isAddCardButtonEnabled(AddCardState state) {
-    return state.isFormValid && isPopulated && !state.isSubmitting;
+    return (isTuyaForm(state)?state.isTuyaFormValid:state.isFormValid) && isPopulated && !state.isSubmitting;
   }
 
   bool isNumberOk(AddCardState state) {
@@ -97,9 +97,51 @@ class _AddCardFormState extends State<AddCardForm> {
     var messages = S.of(context);
     return BlocListener<AddCardBloc, AddCardState>(
       listener: (context, state) {
-        if (state.isSuccess) {
-          print('success');
+        if (state.isFailure) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Expanded(child: Text(state.message)), Icon(Icons.error)],
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
         }
+        if (state.isSubmitting) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Text('Is loading ...')),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
+        }
+        if (state.isSuccess) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Text(state.message)),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+                backgroundColor: Colors.green,
+              ),
+            );
+        }
+
         if (isNumberOk(state))
           FocusScope.of(context).requestFocus(
               isTuyaForm(state) ? _fiscalNumberFocus : _dateExpFocus);
@@ -339,13 +381,18 @@ class _AddCardFormState extends State<AddCardForm> {
 
   @override
   void dispose() {
+    _nameController.dispose();
     _numberController.dispose();
+    _dateExpController.dispose();
+    _cvvController.dispose();
+    _fiscalNumberController.dispose();
+    _tuyaCodeController.dispose();
     super.dispose();
   }
 
   void _onNameChanged() {
     _addCardBloc.add(
-      NameChanged(context, name: _nameController.value.text),
+      NameChanged(context, name: _nameController.value.text.trim()),
     );
   }
 
@@ -359,22 +406,22 @@ class _AddCardFormState extends State<AddCardForm> {
     setState(() {
       _dateExpFormatter();
       _addCardBloc
-          .add(DateExpChanged(context, dateExp: _dateExpController.value.text));
+          .add(DateExpChanged(context, dateExp: _dateExpController.value.text.trim()));
     });
   }
 
   void _onCvvChanged() {
-    _addCardBloc.add(CvvChanged(context, cvv: _cvvController.value.text));
+    _addCardBloc.add(CvvChanged(context, cvv: _cvvController.value.text.trim()));
   }
 
   void _onFiscalNumberChanged() {
     _addCardBloc.add(FiscalNumberChanged(context,
-        fiscalNumber: _fiscalNumberController.value.text));
+        fiscalNumber: _fiscalNumberController.value.text.trim()));
   }
 
   void _onTuyaCodeChanged() {
     _addCardBloc.add(
-        TuyaCodeChanged(context, tuyaCode: _tuyaCodeController.value.text));
+        TuyaCodeChanged(context, tuyaCode: _tuyaCodeController.value.text.trim()));
   }
 
   void _dateExpFormatter() {
@@ -396,7 +443,7 @@ class _AddCardFormState extends State<AddCardForm> {
   }
 
   void _onFormSubmitted() {
-    print('_onFormSubmitted');
+    FocusScope.of(context).requestFocus(FocusNode());
     var card = CardModel(
         bin: null,
         status: null,

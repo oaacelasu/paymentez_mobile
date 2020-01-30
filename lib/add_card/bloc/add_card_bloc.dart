@@ -10,6 +10,7 @@ import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:dio/dio.dart';
 
 import 'add_card_event.dart';
 import 'add_card_state.dart';
@@ -31,10 +32,10 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     Stream<AddCardState> Function(AddCardEvent event) next,
   ) {
     final nonDebounceStream = events.where((event) {
-      return (event is! NameChanged);
+      return (event is! NameChanged && event is! DateExpChanged && event is! CvvChanged);
     });
     final debounceStream = events.where((event) {
-      return (event is NameChanged);
+      return (event is NameChanged || event is DateExpChanged || event is CvvChanged);
     }).debounceTime(Duration(milliseconds: 300));
     return super.transformEvents(
       nonDebounceStream.mergeWith([debounceStream]),
@@ -65,6 +66,7 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
 
   Stream<AddCardState> _mapNameChangedToState(
       BuildContext context, String name) async* {
+
     yield state.update(
       nameError: Validators.isValidName(context, name),
     );
@@ -124,13 +126,14 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     User user,
     CardModel card,
   }) async* {
-    yield AddCardState.fromJson({}).loading();
+    yield state.loading();
     try {
-      await _paymentezRepository.createToken(context,
+      var response = await _paymentezRepository.createToken(context,
           sessionId: sessionId, card: card);
-      yield AddCardState.fromJson({}).success();
-    } catch (_) {
-      yield AddCardState.fromJson({}).failure();
+      yield state.success(response.data.toString());
+    } on DioError catch(e) {
+
+      yield state.failure(e.response.data['error']['description']);
     }
   }
 }
