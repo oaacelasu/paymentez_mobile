@@ -42,7 +42,7 @@ class _AddCardFormState extends State<AddCardForm> {
 
   PaymentezRepository get _paymentezRepository => widget._paymentezRepository;
 
-  bool get isPopulated => _addCardBloc.state.cardBin?.cvvLength != 0
+  bool get isPopulated => _addCardBloc.state.cardBin?.cardType != 'ex' && _addCardBloc.state.cardBin?.cardType != 'ak'
       ? (_nameController.text.isNotEmpty &&
           _numberController.text.isNotEmpty &&
           _dateExpController.text.isNotEmpty &&
@@ -75,7 +75,7 @@ class _AddCardFormState extends State<AddCardForm> {
   }
 
   bool isTuyaForm(AddCardState state) {
-    return (state.cardBin?.cvvLength ?? 3) == 0;
+    return state.cardBin?.cardType == 'ex' || _addCardBloc.state.cardBin?.cardType == 'ak';
   }
 
   @override
@@ -94,6 +94,8 @@ class _AddCardFormState extends State<AddCardForm> {
   Widget build(BuildContext context) {
     print(Localizations.localeOf(context));
 
+
+
     var messages = S.of(context);
     return BlocListener<AddCardBloc, AddCardState>(
       listener: (context, state) {
@@ -104,7 +106,7 @@ class _AddCardFormState extends State<AddCardForm> {
               SnackBar(
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Expanded(child: Text(state.message)), Icon(Icons.error)],
+                  children: [Expanded(child: Text(state.response.description)), Icon(Icons.error)],
                 ),
                 backgroundColor: Colors.red,
               ),
@@ -126,19 +128,52 @@ class _AddCardFormState extends State<AddCardForm> {
             );
         }
         if (state.isSuccess) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
+          var _card = state.response as CardModel;
+          SnackBar _snackBar;
+
+          switch(_card.status){
+            case 'valid':
+              _snackBar = SnackBar(
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: Text(state.message)),
+                    Expanded(child: Text(_card.status)),
                     CircularProgressIndicator(),
                   ],
                 ),
                 backgroundColor: Colors.green,
-              ),
+              );
+              break;
+            case 'review':
+              _snackBar = SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Text(_card.message)),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+                backgroundColor: Colors.amber,
+              );
+              break;
+            default:
+              _snackBar = SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Text(_card.message)),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+                backgroundColor: Colors.red,
+              );
+              break;
+          }
+
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+                _snackBar
             );
         }
 

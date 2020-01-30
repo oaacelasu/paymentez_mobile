@@ -19,7 +19,7 @@ class AddCardState extends Equatable {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
-  final String message;
+  final dynamic response;
 
   bool get isFormValid =>
       '$nameError$numberError$dateExpError$cvvError'.isEmpty;
@@ -39,7 +39,7 @@ class AddCardState extends Equatable {
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
-    @required this.message,
+    @required this.response,
   });
 
   AddCardState empty() {
@@ -56,7 +56,7 @@ class AddCardState extends Equatable {
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
-      message: '',
+      response: null,
     );
   }
 
@@ -65,25 +65,25 @@ class AddCardState extends Equatable {
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
-      message:''
+      response:''
     );
   }
 
-  AddCardState failure(String message) {
+  AddCardState failure(dynamic response) {
     return copyWith(
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
-      message:message,
+      response:response,
     );
   }
 
-  AddCardState success(String message) {
+  AddCardState success(dynamic response) {
     return copyWith(
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
-      message:message,
+      response:response,
     );
   }
 
@@ -108,7 +108,7 @@ class AddCardState extends Equatable {
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
-      message:'',
+      response:'',
     );
   }
 
@@ -141,7 +141,7 @@ class AddCardState extends Equatable {
       tuyaCodeError: null,
       isSubmitting: null,
       isSuccess: null,
-      isFailure: null, message: null);
+      isFailure: null, response: null);
 
   AddCardState copyWith({
     CardBinModel cardBin,
@@ -155,7 +155,7 @@ class AddCardState extends Equatable {
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
-    String message,
+    dynamic response,
   }) {
     return AddCardState(
       cardBin: cardBin ?? this.cardBin,
@@ -169,7 +169,7 @@ class AddCardState extends Equatable {
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
-      message: message ?? this.message
+      response: response ?? this.response
     );
   }
 
@@ -187,7 +187,7 @@ class AddCardState extends Equatable {
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,
-      message: $message
+      response: $response
     }''';
   }
 
@@ -204,6 +204,6 @@ class AddCardState extends Equatable {
         isSubmitting,
         isSuccess,
         isFailure,
-    message
+    response
       ];
 }

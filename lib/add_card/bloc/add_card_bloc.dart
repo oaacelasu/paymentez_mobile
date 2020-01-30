@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
+import 'package:paymentez_mobile/repository/model/error_model.dart';
 import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
@@ -130,10 +131,10 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     try {
       var response = await _paymentezRepository.createToken(context,
           sessionId: sessionId, card: card);
-      yield state.success(response.data.toString());
-    } on DioError catch(e) {
 
-      yield state.failure(e.response.data['error']['description']);
+      yield state.success(CardBinModel.fromJson(response.data['card'??{}]));
+    } on DioError catch(e) {
+      yield state.failure(ErrorModel.fromJson(e.response.data['error']));
     }
   }
 }
