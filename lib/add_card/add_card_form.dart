@@ -127,20 +127,23 @@ class _AddCardFormState extends State<AddCardForm> {
     setState(() {
       _cameraData = details;
       print(details);
+
+      if (details['cardholderName'] != null) {
+        _nameController.text = details['cardholderName'].toString();
+      }
       if (details['cardNumber'] != null) {
         _numberController.text = details['cardNumber'].toString();
-//        _maskDateExpFormatter.updateMask('XX/XX');
       }
-//      if ((details['expiryMonth'] ?? 0) != 0 && (details['expiryYear'] ?? 0) != 0) {
-//        _dateExpController.updateText("" +
-//            '00'.substring(details['expiryMonth'].toString().length) +
-//            details['expiryMonth'].toString() +
-//            "/" +
-//            details['expiryYear'].toString().substring(2));
-//      }
-//      if (details['cvv'] != null) {
-//        _cvvController.updateText(details['cvv']);
-//      }
+      if ((details['expiryMonth'] ?? 0) != 0 && (details['expiryYear'] ?? 0) != 0) {
+        _dateExpController.text="" +
+            '00'.substring(details['expiryMonth'].toString().length) +
+            details['expiryMonth'].toString() +
+            "/" +
+            details['expiryYear'].toString().substring(2);
+      }
+      if (details['cvv'] != null) {
+        _cvvController.text= details['cvv'];
+      }
     });
   }
 

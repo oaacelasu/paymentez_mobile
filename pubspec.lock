@@ -116,7 +116,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "24ff1079b6fb1ee95534472de708a7e47766af5f"
+      resolved-ref: "3e32a226bb5d264e32fe53894a5b1645dd2d4948"
       url: "git://github.com/oaacelasu/flutter_card_io_v2.git"
     source: git
     version: "0.0.1"
