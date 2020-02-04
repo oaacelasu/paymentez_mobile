@@ -21,6 +21,7 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get add_card_camera_instructions => "Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo";
   String get add_card_cvc_amex_hint => "1234";
   String get add_card_cvc_amex_label => "CVV";
   String get add_card_cvc_hint => "123";
@@ -80,6 +81,8 @@ class $pt extends S {
   @override
   String get add_card_invalid_cvc => "Cod. Segurança Inválido.";
   @override
+  String get add_card_camera_instructions => "Localize a frente do seu cartão\ndentro das guias e aguarde enquanto\no sistema captura a foto";
+  @override
   String get add_card_cvc_hint => "123";
   @override
   String get add_card_cvc_amex_hint => "1234";
@@ -135,6 +138,8 @@ class $es extends S {
   String get add_card_invalid_expiration_year => "El año de vencimiento de la tarjeta no es válido.";
   @override
   String get add_card_invalid_cvc => "El código de seguridad de la tarjeta no es válido.";
+  @override
+  String get add_card_camera_instructions => "Ubique el frente de su tarjeta\ndentro de las guías y espere mientras\nel sistema captura la foto";
   @override
   String get add_card_cvc_hint => "123";
   @override

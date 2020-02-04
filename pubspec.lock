@@ -111,6 +111,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  flutter_card_io_v2:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "24ff1079b6fb1ee95534472de708a7e47766af5f"
+      url: "git://github.com/oaacelasu/flutter_card_io_v2.git"
+    source: git
+    version: "0.0.1"
   flutter_kount:
     dependency: "direct main"
     description:
