@@ -493,7 +493,7 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
         width: 25.0,
         child: Visibility(
           visible: (state.cardBin?.urlLogo ?? '').isEmpty,
-          child: Image.asset('assets/images/card_generic.png', package: 'paymentez_flutter'),
+          child: Image.asset('assets/images/card_generic.png', package: 'paymentez_mobile'),
           replacement: SvgPicture.network(
             state.cardBin?.urlLogo ?? '',
             semanticsLabel: 'card_bin_image',
