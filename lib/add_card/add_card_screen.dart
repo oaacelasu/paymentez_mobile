@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paymentez_mobile/channel/paymentez_channel.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 
 import 'add_card_form.dart';
@@ -16,7 +17,12 @@ class AddCardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('AddCard')),
+      appBar: AppBar(
+        title: Text('AddCard'),
+        leading: BackButton(
+          onPressed: () => Paymentez.getInstance.pop(context),
+        ),
+      ),
       body: BlocProvider<AddCardBloc>(
         create: (context) =>
             AddCardBloc(paymentezRepository: _paymentezRepository),

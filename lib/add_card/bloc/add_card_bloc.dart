@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
+import 'package:paymentez_mobile/channel/paymentez_channel.dart';
 import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
 import 'package:paymentez_mobile/repository/model/error_model.dart';
@@ -11,7 +13,6 @@ import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:dio/dio.dart';
 
 import 'add_card_event.dart';
 import 'add_card_state.dart';
@@ -67,7 +68,6 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
 
   Stream<AddCardState> _mapNameChangedToState(
       BuildContext context, String name) async* {
-
     yield state.update(
       nameError: Validators.isValidName(context, name),
     );
@@ -132,9 +132,18 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
       var response = await _paymentezRepository.createToken(context,
           sessionId: sessionId, card: card);
 
-      yield state.success(CardBinModel.fromJson(response.data['card'??{}]));
-    } on DioError catch(e) {
-      yield state.failure(ErrorModel.fromJson(e.response.data['error']));
+      var result = CardModel.fromJson(response.data['card' ?? {}]);
+      print('the request est ok');
+      yield state.success(result);
+      Future.delayed(Duration(seconds: 2), () {
+        Paymentez.getInstance.deliverAddCardResponse(context, result);
+      });
+    } on DioError catch (e) {
+      var result = ErrorModel.fromJson(e.response.data['error']);
+      yield state.failure(result);
+      Future.delayed(Duration(seconds: 2), () {
+        Paymentez.getInstance.deliverAddCardResponse(context, result);
+      });
     }
   }
 }

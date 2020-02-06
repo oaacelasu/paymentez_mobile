@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show PlatformException;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_io_v2/flutter_card_io_v2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,7 +9,6 @@ import 'package:paymentez_mobile/generated/i18n.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
-import 'package:flutter/services.dart' show PlatformException;
 
 import 'add_card_button.dart';
 import 'bloc/bloc.dart';
@@ -24,7 +24,7 @@ class AddCardForm extends StatefulWidget {
   State<AddCardForm> createState() => _AddCardFormState();
 }
 
-class _AddCardFormState extends State<AddCardForm> {
+class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
   final MaskTextInputFormatter _maskDateExpFormatter =
       MaskTextInputFormatter(mask: 'XX/XX', filter: AddCardState.filter);
 
@@ -44,7 +44,8 @@ class _AddCardFormState extends State<AddCardForm> {
   Map<String, dynamic> _cameraData;
   PaymentezRepository get _paymentezRepository => widget._paymentezRepository;
 
-  bool get isPopulated => _addCardBloc.state.cardBin?.cardType != 'ex' && _addCardBloc.state.cardBin?.cardType != 'ak'
+  bool get isPopulated => _addCardBloc.state.cardBin?.cardType != 'ex' &&
+          _addCardBloc.state.cardBin?.cardType != 'ak'
       ? (_nameController.text.isNotEmpty &&
           _numberController.text.isNotEmpty &&
           _dateExpController.text.isNotEmpty &&
@@ -55,7 +56,9 @@ class _AddCardFormState extends State<AddCardForm> {
           _tuyaCodeController.text.isNotEmpty);
 
   bool isAddCardButtonEnabled(AddCardState state) {
-    return (isTuyaForm(state)?state.isTuyaFormValid:state.isFormValid) && isPopulated && !state.isSubmitting;
+    return (isTuyaForm(state) ? state.isTuyaFormValid : state.isFormValid) &&
+        isPopulated &&
+        !state.isSubmitting;
   }
 
   bool isNumberOk(AddCardState state) {
@@ -77,12 +80,36 @@ class _AddCardFormState extends State<AddCardForm> {
   }
 
   bool isTuyaForm(AddCardState state) {
-    return state.cardBin?.cardType == 'ex' || _addCardBloc.state.cardBin?.cardType == 'ak';
+    return state.cardBin?.cardType == 'ex' ||
+        _addCardBloc.state.cardBin?.cardType == 'ak';
+  }
+
+  AppLifecycleState _notification;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _notification = state;
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _nameController.dispose();
+    _numberController.dispose();
+    _dateExpController.dispose();
+    _cvvController.dispose();
+    _fiscalNumberController.dispose();
+    _tuyaCodeController.dispose();
+    super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _addCardBloc = BlocProvider.of<AddCardBloc>(context);
     _nameController.addListener(_onNameChanged);
     _numberController.addListener(_onNumberChanged);
@@ -92,27 +119,25 @@ class _AddCardFormState extends State<AddCardForm> {
     _tuyaCodeController.addListener(_onTuyaCodeChanged);
   }
 
-
   // Platform messages are asynchronous, so we initialize in an async method.
   _scanCard() async {
-
     Map<String, dynamic> details;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       details = new Map<String, dynamic>.from(await FlutterCardIoV2.scanCard({
-        "requireExpiry": true,
-        "scanExpiry": true,
-        "requireCVV": false,
-        "requirePostalCode": false,
-        "restrictPostalCodeToNumericOnly": false,
-        "requireCardHolderName": true,
-        "hideCardIOLogo": true,
-        "useCardIOLogo": false,
-        "usePayPalActionbarIcon": false,
-        "suppressManualEntry": true,
-        "suppressConfirmation": true,
-        "scanInstructions": S.of(context).add_card_camera_instructions,
-      }) ??
+            "requireExpiry": true,
+            "scanExpiry": true,
+            "requireCVV": false,
+            "requirePostalCode": false,
+            "restrictPostalCodeToNumericOnly": false,
+            "requireCardHolderName": true,
+            "hideCardIOLogo": true,
+            "useCardIOLogo": false,
+            "usePayPalActionbarIcon": false,
+            "suppressManualEntry": true,
+            "suppressConfirmation": true,
+            "scanInstructions": S.of(context).add_card_camera_instructions,
+          }) ??
           new Map());
     } on PlatformException {
       return;
@@ -134,15 +159,16 @@ class _AddCardFormState extends State<AddCardForm> {
       if (details['cardNumber'] != null) {
         _numberController.text = details['cardNumber'].toString();
       }
-      if ((details['expiryMonth'] ?? 0) != 0 && (details['expiryYear'] ?? 0) != 0) {
-        _dateExpController.text="" +
+      if ((details['expiryMonth'] ?? 0) != 0 &&
+          (details['expiryYear'] ?? 0) != 0) {
+        _dateExpController.text = "" +
             '00'.substring(details['expiryMonth'].toString().length) +
             details['expiryMonth'].toString() +
             "/" +
             details['expiryYear'].toString().substring(2);
       }
       if (details['cvv'] != null) {
-        _cvvController.text= details['cvv'];
+        _cvvController.text = details['cvv'];
       }
     });
   }
@@ -150,8 +176,6 @@ class _AddCardFormState extends State<AddCardForm> {
   @override
   Widget build(BuildContext context) {
     print(Localizations.localeOf(context));
-
-
 
     var messages = S.of(context);
     return BlocListener<AddCardBloc, AddCardState>(
@@ -163,7 +187,10 @@ class _AddCardFormState extends State<AddCardForm> {
               SnackBar(
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Expanded(child: Text(state.response.description)), Icon(Icons.error)],
+                  children: [
+                    Expanded(child: Text(state.response.description)),
+                    Icon(Icons.error)
+                  ],
                 ),
                 backgroundColor: Colors.red,
               ),
@@ -188,7 +215,7 @@ class _AddCardFormState extends State<AddCardForm> {
           var _card = state.response as CardModel;
           SnackBar _snackBar;
 
-          switch(_card.status){
+          switch (_card.status) {
             case 'valid':
               _snackBar = SnackBar(
                 content: Row(
@@ -229,9 +256,7 @@ class _AddCardFormState extends State<AddCardForm> {
 
           Scaffold.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(
-                _snackBar
-            );
+            ..showSnackBar(_snackBar);
         }
 
         if (isNumberOk(state))
@@ -292,7 +317,8 @@ class _AddCardFormState extends State<AddCardForm> {
                               suffixIcon: IconButton(
                                   icon: Icon(Icons.close),
                                   onPressed: () => setState(() {
-                                        Future.delayed(Duration(milliseconds: 50))
+                                        Future.delayed(
+                                                Duration(milliseconds: 50))
                                             .then((_) {
                                           _numberController.clear();
                                         });
@@ -474,8 +500,9 @@ class _AddCardFormState extends State<AddCardForm> {
             placeholderBuilder: (BuildContext context) =>
                 FadeInImage.assetNetwork(
                     placeholder: 'assets/images/card_generic.png',
-                    image: state.cardBin?.urlLogoPng?.replaceAll('svg', 'png') ??
-                        ''),
+                    image:
+                        state.cardBin?.urlLogoPng?.replaceAll('svg', 'png') ??
+                            ''),
           ),
         ),
       ),
@@ -485,19 +512,9 @@ class _AddCardFormState extends State<AddCardForm> {
   SizedBox cameraIcon() {
     return SizedBox(
       width: 25.0,
-      child: InkWell(child: Icon(Icons.photo_camera, size: 25.0), onTap:_scanCard),
+      child: InkWell(
+          child: Icon(Icons.photo_camera, size: 25.0), onTap: _scanCard),
     );
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _numberController.dispose();
-    _dateExpController.dispose();
-    _cvvController.dispose();
-    _fiscalNumberController.dispose();
-    _tuyaCodeController.dispose();
-    super.dispose();
   }
 
   void _onNameChanged() {
@@ -515,13 +532,14 @@ class _AddCardFormState extends State<AddCardForm> {
   void _onDateExpChanged() {
     setState(() {
       _dateExpFormatter();
-      _addCardBloc
-          .add(DateExpChanged(context, dateExp: _dateExpController.value.text.trim()));
+      _addCardBloc.add(DateExpChanged(context,
+          dateExp: _dateExpController.value.text.trim()));
     });
   }
 
   void _onCvvChanged() {
-    _addCardBloc.add(CvvChanged(context, cvv: _cvvController.value.text.trim()));
+    _addCardBloc
+        .add(CvvChanged(context, cvv: _cvvController.value.text.trim()));
   }
 
   void _onFiscalNumberChanged() {
@@ -530,8 +548,8 @@ class _AddCardFormState extends State<AddCardForm> {
   }
 
   void _onTuyaCodeChanged() {
-    _addCardBloc.add(
-        TuyaCodeChanged(context, tuyaCode: _tuyaCodeController.value.text.trim()));
+    _addCardBloc.add(TuyaCodeChanged(context,
+        tuyaCode: _tuyaCodeController.value.text.trim()));
   }
 
   void _dateExpFormatter() {

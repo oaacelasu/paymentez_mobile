@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
+import 'package:paymentez_mobile/repository/model/card_model.dart';
+import 'package:paymentez_mobile/repository/model/error_model.dart';
 
 class Paymentez {
   static const MethodChannel _channel = const MethodChannel('paymentez');
@@ -16,6 +18,19 @@ class Paymentez {
 
   Future<void> init(BuildContext context) async =>
       _channel.setMethodCallHandler((call) => _handleMethod(call, context));
+
+  Future<void> deliverAddCardResponse(
+      BuildContext context, dynamic response) async {
+    if (response is CardModel) {
+      _channel.invokeMethod("onAddCardSuccess", response.toJson());
+    } else if (response is ErrorModel) {
+      _channel.invokeMethod("onAddCardFail", response.toJson());
+    }
+  }
+
+  Future<void> pop(BuildContext context) async {
+    _channel.invokeMethod("pop");
+  }
 
   Future<String> getSessionId(BuildContext context, bool testMode) async =>
       _kountChannel.invokeMethod(

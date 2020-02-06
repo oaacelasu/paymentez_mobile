@@ -27,6 +27,7 @@ var rootHandler = Handler(
       );
     },
     type: HandlerType.route);
+
 var addCardHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return BlocBuilder<ConfigBloc, ConfigState>(
