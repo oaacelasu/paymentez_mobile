@@ -2,19 +2,22 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_kount/flutter_kount.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
+import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
+import 'package:paymentez_mobile/repository/model/card_model.dart';
+import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/utils/repository_utils.dart';
 
-import 'model/card_bin_model.dart';
-import 'model/card_model.dart';
-import 'model/user.dart';
 
 class PaymentezRepository {
   final ConfigState _configState;
   final User _user;
   final Dio _dio;
 
+
+  ConfigState get configState =>_configState;
+
   PaymentezRepository({ConfigState configState, User user})
-      : _configState = configState ?? DevModeState('', ''),
+      : _configState = configState ?? DevModeState('', '', false),
         _user = user,
         _dio = Dio() {
     _dio.options.baseUrl = configState.baseUrl;

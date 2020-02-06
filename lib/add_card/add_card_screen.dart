@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paymentez_mobile/add_card/add_card_form.dart';
+import 'package:paymentez_mobile/add_card/bloc/bloc.dart';
 import 'package:paymentez_mobile/channel/paymentez_channel.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 
-import 'add_card_form.dart';
-import 'bloc/add_card_bloc.dart';
 
 class AddCardScreen extends StatelessWidget {
   final PaymentezRepository _paymentezRepository;

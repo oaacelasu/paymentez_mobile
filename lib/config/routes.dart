@@ -8,8 +8,8 @@
  */
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:paymentez_mobile/config/route_handlers.dart';
 
-import './route_handlers.dart';
 
 class Routes {
   static final String root = "/";

@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
+import 'package:paymentez_mobile/add_card/bloc/bloc.dart';
 import 'package:paymentez_mobile/channel/paymentez_channel.dart';
 import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
@@ -14,8 +15,6 @@ import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'add_card_event.dart';
-import 'add_card_state.dart';
 
 class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
   PaymentezRepository _paymentezRepository;

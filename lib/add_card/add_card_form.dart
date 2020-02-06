@@ -5,13 +5,13 @@ import 'package:flutter_card_io_v2/flutter_card_io_v2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:paymentez_mobile/add_card/add_card_button.dart';
+import 'package:paymentez_mobile/add_card/bloc/bloc.dart';
 import 'package:paymentez_mobile/generated/i18n.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
 
-import 'add_card_button.dart';
-import 'bloc/bloc.dart';
 
 class AddCardForm extends StatefulWidget {
   final PaymentezRepository _paymentezRepository;
@@ -27,6 +27,7 @@ class AddCardForm extends StatefulWidget {
 class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
   final MaskTextInputFormatter _maskDateExpFormatter =
       MaskTextInputFormatter(mask: 'XX/XX', filter: AddCardState.filter);
+
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _numberController = TextEditingController();
@@ -175,7 +176,6 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    print(Localizations.localeOf(context));
 
     var messages = S.of(context);
     return BlocListener<AddCardBloc, AddCardState>(
@@ -267,6 +267,8 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
       },
       child: BlocBuilder<AddCardBloc, AddCardState>(
         builder: (context, state) {
+          print(_paymentezRepository.configState);
+
           return Padding(
             padding: EdgeInsets.all(15.0),
             child: Form(
@@ -493,7 +495,7 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
         width: 25.0,
         child: Visibility(
           visible: (state.cardBin?.urlLogo ?? '').isEmpty,
-          child: Image.asset('assets/images/card_generic.png', package: 'paymentez_mobile'),
+          child: Image.asset('assets/images/card_generic.png', package: _paymentezRepository.configState.isFlutterAppHost?'paymentez_mobile':null),
           replacement: SvgPicture.network(
             state.cardBin?.urlLogo ?? '',
             semanticsLabel: 'card_bin_image',

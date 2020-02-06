@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:paymentez_mobile/config/bloc.dart';
 
-import './bloc.dart';
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   @override
   ConfigState get initialState =>
-      StgModeState("JVA-CO-CLIENT", "v3Ew8H8csSXxaf2IvvmuLnnB0nPmT0");
+      StgModeState("JVA-CO-CLIENT", "v3Ew8H8csSXxaf2IvvmuLnnB0nPmT0", false);
 
   @override
   Stream<ConfigState> mapEventToState(
@@ -15,27 +15,27 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   ) async* {
     if (event is SetEnvironment) {
       yield* _mapSetEnvironmentToState(event.testMode,
-          event.paymentezClientAppCode, event.paymentezClientAppKey);
+          event.paymentezClientAppCode, event.paymentezClientAppKey, event.isFlutterAppHost);
     }
   }
 
   Stream<ConfigState> _mapSetEnvironmentToState(String testMode,
-      String paymentezClientAppCode, String paymentezClientAppKey) async* {
+      String paymentezClientAppCode, String paymentezClientAppKey, bool isFlutterAppHost) async* {
     switch (testMode.toLowerCase()) {
       case 'prod':
-        yield ProdModeState(paymentezClientAppCode, paymentezClientAppKey);
+        yield ProdModeState(paymentezClientAppCode, paymentezClientAppKey, isFlutterAppHost);
         break;
       case 'qa':
-        yield QaModeState(paymentezClientAppCode, paymentezClientAppKey);
+        yield QaModeState(paymentezClientAppCode, paymentezClientAppKey, isFlutterAppHost);
         break;
       case 'stg':
-        yield StgModeState(paymentezClientAppCode, paymentezClientAppKey);
+        yield StgModeState(paymentezClientAppCode, paymentezClientAppKey, isFlutterAppHost);
         break;
       case 'dev':
-        yield DevModeState(paymentezClientAppCode, paymentezClientAppKey);
+        yield DevModeState(paymentezClientAppCode, paymentezClientAppKey,  isFlutterAppHost);
         break;
       default:
-        yield DevModeState(paymentezClientAppCode, paymentezClientAppKey);
+        yield DevModeState(paymentezClientAppCode, paymentezClientAppKey,  isFlutterAppHost);
     }
   }
 }
