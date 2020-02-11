@@ -27,6 +27,7 @@
 
   "add_card_tuya_code_label" : "Senha Tuya",
   "add_card_invalid_tuya_code" : "Senha Inválida.",
-  "add_card_camera_instructions" : "Localize a frente do seu cartão\ndentro das guias e aguarde enquanto\no sistema captura a foto"
+  "add_card_camera_instructions" : "Localize a frente do seu cartão\ndentro das guias e aguarde enquanto\no sistema captura a foto",
+  "loading_lbl" : "Carregando..."
 
 }

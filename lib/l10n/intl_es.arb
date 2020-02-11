@@ -25,6 +25,7 @@
 
   "add_card_tuya_code_label" : "Clave Tuya",
   "add_card_invalid_tuya_code" : "Clave invalida.",
-  "add_card_camera_instructions" : "Ubique el frente de su tarjeta\ndentro de las guías y espere mientras\nel sistema captura la foto"
+  "add_card_camera_instructions" : "Ubique el frente de su tarjeta\ndentro de las guías y espere mientras\nel sistema captura la foto",
+  "loading_lbl" : "Cargando..."
 
 }
