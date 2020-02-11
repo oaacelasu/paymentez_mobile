@@ -15,7 +15,6 @@ import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
 import 'package:rxdart/rxdart.dart';
 
-
 class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
   PaymentezRepository _paymentezRepository;
 
@@ -46,6 +45,7 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
 
   @override
   Stream<AddCardState> mapEventToState(AddCardEvent event) async* {
+    print('holassss: ${_paymentezRepository.configState.isFlutterAppHost}');
     if (event is NumberChanged) {
       yield* _mapNumberChangedToState(event.context, event.number ?? '');
     } else if (event is NameChanged) {
@@ -135,13 +135,19 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
       print('the request est ok');
       yield state.success(result);
       Future.delayed(Duration(seconds: 2), () {
-        Paymentez.getInstance.deliverAddCardResponse(context, result);
+        if (_paymentezRepository.configState.isFlutterAppHost)
+          _paymentezRepository.successAction(result);
+        else
+          Paymentez.getInstance.deliverAddCardResponse(context, result);
       });
     } on DioError catch (e) {
       var result = ErrorModel.fromJson(e.response.data['error']);
       yield state.failure(result);
       Future.delayed(Duration(seconds: 2), () {
-        Paymentez.getInstance.deliverAddCardResponse(context, result);
+        if (_paymentezRepository.configState.isFlutterAppHost)
+          _paymentezRepository.errorAction(result);
+        else
+          Paymentez.getInstance.deliverAddCardResponse(context, result);
       });
     }
   }

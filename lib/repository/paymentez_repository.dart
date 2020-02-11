@@ -1,24 +1,35 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_kount/flutter_kount.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
 import 'package:paymentez_mobile/repository/model/card_bin_model.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
+import 'package:paymentez_mobile/repository/model/error_model.dart';
 import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/utils/repository_utils.dart';
 
-
-class PaymentezRepository {
+class PaymentezRepository extends Equatable {
   final ConfigState _configState;
   final User _user;
+  final Function(CardModel) _successAction;
+  final Function(ErrorModel) _errorAction;
+
   final Dio _dio;
 
+  ConfigState get configState => _configState;
+  Function(CardModel) get successAction => _successAction;
+  Function(ErrorModel) get errorAction => _errorAction;
 
-  ConfigState get configState =>_configState;
-
-  PaymentezRepository({ConfigState configState, User user})
+  PaymentezRepository(
+      {ConfigState configState,
+      User user,
+      Function(CardModel card) successAction,
+      Function(ErrorModel error) errorAction})
       : _configState = configState ?? DevModeState('', '', false),
         _user = user,
+        _successAction = successAction,
+        _errorAction = errorAction,
         _dio = Dio() {
     _dio.options.baseUrl = configState.baseUrl;
     _dio.options.connectTimeout = 30 * 1000;
@@ -34,16 +45,15 @@ class PaymentezRepository {
 
   Future<Response> createToken(BuildContext context,
       {@required String sessionId, @required CardModel card}) async {
-      print('${_configState.baseUrl}/v2/card/add');
+    print('${_configState.baseUrl}/v2/card/add');
 
-      Response response = await _dio.post('/v2/card/add', data: {
-        "session_id": await FlutterKount.sessionId,
-        "card": card.toJson(),
-        "user": _user.toJson(),
-      });
+    Response response = await _dio.post('/v2/card/add', data: {
+      "session_id": await FlutterKount.sessionId,
+      "card": card.toJson(),
+      "user": _user.toJson(),
+    });
 
-      return response;
-
+    return response;
   }
 
   Future<CardBinModel> getCardBin({@required String bin}) async {
@@ -57,4 +67,8 @@ class PaymentezRepository {
       return CardBinModel.fromJson({});
     }
   }
+
+  @override
+  List<Object> get props =>
+      [_configState, _user, _successAction, _errorAction, _dio];
 }

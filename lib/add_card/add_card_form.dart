@@ -7,11 +7,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:paymentez_mobile/add_card/add_card_button.dart';
 import 'package:paymentez_mobile/add_card/bloc/bloc.dart';
-import 'package:paymentez_mobile/generated/i18n.dart';
+import 'package:paymentez_mobile/generated/l10n.dart';
 import 'package:paymentez_mobile/repository/model/card_model.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
-
 
 class AddCardForm extends StatefulWidget {
   final PaymentezRepository _paymentezRepository;
@@ -27,7 +26,6 @@ class AddCardForm extends StatefulWidget {
 class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
   final MaskTextInputFormatter _maskDateExpFormatter =
       MaskTextInputFormatter(mask: 'XX/XX', filter: AddCardState.filter);
-
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _numberController = TextEditingController();
@@ -176,7 +174,6 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-
     var messages = S.of(context);
     return BlocListener<AddCardBloc, AddCardState>(
       listener: (context, state) {
@@ -267,8 +264,7 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
       },
       child: BlocBuilder<AddCardBloc, AddCardState>(
         builder: (context, state) {
-          print(_paymentezRepository.configState);
-
+          print('hola: ${_paymentezRepository.configState.isFlutterAppHost}');
           return Padding(
             padding: EdgeInsets.all(15.0),
             child: Form(
@@ -489,19 +485,21 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
   }
 
   Widget cardIcon(AddCardState state) {
+    var image =
+        '${_paymentezRepository.configState.isFlutterAppHost ? 'packages/paymentez_mobile/' : ''}assets/images/card_generic.png';
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: SizedBox(
         width: 25.0,
         child: Visibility(
           visible: (state.cardBin?.urlLogo ?? '').isEmpty,
-          child: Image.asset('assets/images/card_generic.png', package: _paymentezRepository.configState.isFlutterAppHost?'paymentez_mobile':null),
+          child: Image.asset(image),
           replacement: SvgPicture.network(
             state.cardBin?.urlLogo ?? '',
             semanticsLabel: 'card_bin_image',
             placeholderBuilder: (BuildContext context) =>
                 FadeInImage.assetNetwork(
-                    placeholder: 'assets/images/card_generic.png',
+                    placeholder: image,
                     image:
                         state.cardBin?.urlLogoPng?.replaceAll('svg', 'png') ??
                             ''),

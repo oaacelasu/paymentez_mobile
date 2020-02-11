@@ -15,6 +15,12 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_card_io_v2/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_card_io_v2/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_card_io_v2/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_card_io_v2/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_card_io_v2/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_card_io_v2/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_kount/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_kount/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/flutter_kount/build" />

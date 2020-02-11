@@ -7,9 +7,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paymentez_mobile/channel/paymentez_channel.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
 import 'package:paymentez_mobile/config/routes.dart';
-import 'package:paymentez_mobile/generated/i18n.dart';
+import 'package:paymentez_mobile/generated/l10n.dart';
 import 'package:paymentez_mobile/simple_bloc_delegate.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:paymentez_mobile/generated/i18n.dart';
+import 'package:paymentez_mobile/generated/l10n.dart';
 
 class Validators {
   static final RegExp _nameRegExp = RegExp(r'^[A-Za-zÀ-ÖØ-öø-ÿ ]+$');
