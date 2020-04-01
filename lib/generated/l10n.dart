@@ -235,6 +235,15 @@ class S {
       args: [],
     );
   }
+
+  String get loading_lbl {
+    return Intl.message(
+      'Loading...',
+      name: 'loading_lbl',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

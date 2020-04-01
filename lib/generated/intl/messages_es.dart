@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "add_card_number_hint" : MessageLookupByLibrary.simpleMessage("1234 1234 1234 1234"),
     "add_card_number_label" : MessageLookupByLibrary.simpleMessage("Número de tarjeta"),
     "add_card_tuya_code_label" : MessageLookupByLibrary.simpleMessage("Clave Tuya"),
-    "app_name" : MessageLookupByLibrary.simpleMessage("Paymentez SDK")
+    "app_name" : MessageLookupByLibrary.simpleMessage("Paymentez SDK"),
+    "loading_lbl" : MessageLookupByLibrary.simpleMessage("Cargando...")
   };
 }

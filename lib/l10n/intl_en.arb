@@ -28,7 +28,8 @@
 
   "add_card_tuya_code_label" : "Tuya password",
   "add_card_invalid_tuya_code" : "Invalid password",
-  "add_card_camera_instructions" : "Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo"
+  "add_card_camera_instructions" : "Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo",
+  "loading_lbl" : "Loading..."
 
 
 
