@@ -13,7 +13,6 @@ import 'package:paymentez_mobile/repository/model/error_model.dart';
 import 'package:paymentez_mobile/repository/model/user.dart';
 import 'package:paymentez_mobile/repository/paymentez_repository.dart';
 import 'package:paymentez_mobile/utils/validators.dart';
-import 'package:rxdart/rxdart.dart';
 
 class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
   PaymentezRepository _paymentezRepository;
@@ -26,22 +25,22 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
   @override
   AddCardState get initialState => AddCardState.fromJson({}).empty();
 
-  @override
-  Stream<AddCardState> transformEvents(
-    Stream<AddCardEvent> events,
-    Stream<AddCardState> Function(AddCardEvent event) next,
-  ) {
-    final nonDebounceStream = events.where((event) {
-      return (event is! NameChanged && event is! CvvChanged);
-    });
-    final debounceStream = events.where((event) {
-      return (event is NameChanged || event is CvvChanged);
-    }).debounceTime(Duration(milliseconds: 300));
-    return super.transformEvents(
-      nonDebounceStream.mergeWith([debounceStream]),
-      next,
-    );
-  }
+//  @override
+//  Stream<AddCardState> transformEvents(
+//    Stream<AddCardEvent> events,
+//    Stream<AddCardState> Function(AddCardEvent event) next,
+//  ) {
+//    final nonDebounceStream = events.where((event) {
+//      return (event is! NameChanged && event is! CvvChanged);
+//    });
+//    final debounceStream = events.where((event) {
+//      return (event is NameChanged || event is CvvChanged);
+//    }).debounceTime(Duration(milliseconds: 300));
+//    return super.transformEvents(
+//      nonDebounceStream.mergeWith([debounceStream]),
+//      next,
+//    );
+//  }
 
   @override
   Stream<AddCardState> mapEventToState(AddCardEvent event) async* {

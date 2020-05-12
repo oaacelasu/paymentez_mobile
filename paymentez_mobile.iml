@@ -36,6 +36,12 @@
       <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider/path_provider_macos/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider/path_provider_macos/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider/path_provider_macos/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider_macos/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider_macos/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider_macos/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider_macos/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider_macos/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/.ios/Flutter/.symlinks/path_provider_macos/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>

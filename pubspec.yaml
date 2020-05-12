@@ -11,17 +11,17 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  dio: ^3.0.8
-  equatable: ^1.0.0
-  meta: ^1.1.6
-  font_awesome_flutter: ^8.5.0
-  flutter_bloc: ^3.1.0
-  path_provider: ^1.5.1
+  dio: ^3.0.9
+  equatable: ^1.1.1
+  meta: ^1.1.8
+  font_awesome_flutter: ^8.8.1
+  flutter_bloc: ^4.0.0
+  path_provider: ^1.6.8
   after_layout: ^1.0.7+2
-  crypto: ^2.1.2
-  flutter_svg: ^0.17.0
+  crypto: ^2.1.4
+  flutter_svg: ^0.17.4
   mask_text_input_formatter: ^1.0.6
-  fluro: ^1.5.1
+  fluro: ^1.6.3
   flutter_kount:
     git:
       url: git://github.com/oaacelasu/flutter_kount.git

@@ -19,10 +19,19 @@ class AddCardForm extends StatefulWidget {
   final Function(Function) _summitButton;
   final Widget _belowButton;
 
-
-  AddCardForm({Key key, @required PaymentezRepository paymentezRepository, Widget title, Widget aboveButton, Function(Function) summitButton, Widget belowButton})
+  AddCardForm(
+      {Key key,
+      @required PaymentezRepository paymentezRepository,
+      Widget title,
+      Widget aboveButton,
+      Function(Function) summitButton,
+      Widget belowButton})
       : assert(paymentezRepository != null),
-        _paymentezRepository = paymentezRepository,_aboveButton = aboveButton, _summitButton = summitButton, _belowButton = belowButton, _title = title,
+        _paymentezRepository = paymentezRepository,
+        _aboveButton = aboveButton,
+        _summitButton = summitButton,
+        _belowButton = belowButton,
+        _title = title,
         super(key: key);
 
   State<AddCardForm> createState() => _AddCardFormState();
@@ -126,6 +135,7 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
   // Platform messages are asynchronous, so we initialize in an async method.
   _scanCard() async {
     Map<String, dynamic> details;
+    print('1');
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       details = new Map<String, dynamic>.from(await FlutterCardIoV2.scanCard({
@@ -143,9 +153,16 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
             "scanInstructions": S.of(context).add_card_camera_instructions,
           }) ??
           new Map());
-    } on PlatformException {
+      print('2');
+    } on PlatformException catch (e) {
+      print(e);
+      print('3');
       return;
     }
+    print('5');
+
+    print(details);
+    print('6');
 
     if (details == null) {
       return;
@@ -154,6 +171,8 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
     if (!mounted) return;
 
     setState(() {
+      print('7');
+
       _cameraData = details;
       print(details);
 
@@ -179,7 +198,6 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    var messages = S.of(context);
     return BlocListener<AddCardBloc, AddCardState>(
       listener: (context, state) {
         if (state.isFailure) {
@@ -190,7 +208,10 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: Text(state.response.type??state.response.type??state.response.toString())),
+                    Expanded(
+                        child: Text(state.response.type ??
+                            state.response.type ??
+                            state.response.toString())),
                     Icon(Icons.error)
                   ],
                 ),
@@ -269,15 +290,16 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
       },
       child: BlocBuilder<AddCardBloc, AddCardState>(
         builder: (context, state) {
+          var messages = S.of(context);
           print('hola: ${_paymentezRepository.configState.isFlutterAppHost}');
+
           return Padding(
             padding: EdgeInsets.all(15.0),
             child: Form(
               child: ListView(
                 children: <Widget>[
-              widget._title??Container(height: 0.0, width: 0.0),
-
-                TextFormField(
+                  widget._title ?? Container(height: 0.0, width: 0.0),
+                  TextFormField(
                     controller: _nameController,
                     focusNode: _nameFocus,
                     textInputAction: TextInputAction.next,
@@ -469,19 +491,20 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
                       ],
                     ),
                   ),
-                  widget._aboveButton??Container(height: 0.0, width: 0.0),
-                  widget._summitButton!=null?widget._summitButton(isAddCardButtonEnabled(state)
-                      ? _onFormSubmitted
-                      : null):Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: AddCardButton(
-                      onPressed: isAddCardButtonEnabled(state)
+                  widget._aboveButton ?? Container(height: 0.0, width: 0.0),
+                  widget._summitButton != null
+                      ? widget._summitButton(isAddCardButtonEnabled(state)
                           ? _onFormSubmitted
-                          : null,
-                    ),
-                  ),
-                  widget._belowButton??Container(height: 0.0, width: 0.0),
-
+                          : null)
+                      : Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: AddCardButton(
+                            onPressed: isAddCardButtonEnabled(state)
+                                ? _onFormSubmitted
+                                : null,
+                          ),
+                        ),
+                  widget._belowButton ?? Container(height: 0.0, width: 0.0),
                 ],
               ),
             ),

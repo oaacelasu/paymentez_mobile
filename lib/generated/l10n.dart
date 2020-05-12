@@ -9,25 +9,23 @@ import 'intl/messages_all.dart';
 // **************************************************************************
 
 class S {
-  S(this.localeName);
+  S();
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S(localeName);
+      return S();
     });
   } 
 
   static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
-
-  final String localeName;
 
   String get app_name {
     return Intl.message(
@@ -49,7 +47,7 @@ class S {
 
   String get add_card_name_label {
     return Intl.message(
-      'Card Holder\'s Name',
+      'Nombre del titular (igual que en la tarjeta)',
       name: 'add_card_name_label',
       desc: '',
       args: [],
@@ -58,7 +56,7 @@ class S {
 
   String get add_card_invalid_name {
     return Intl.message(
-      'Your card holder\'s name is invalid.',
+      'El Nombre del titular de la tarjeta no es válido.',
       name: 'add_card_invalid_name',
       desc: '',
       args: [],
@@ -76,7 +74,7 @@ class S {
 
   String get add_card_number_label {
     return Intl.message(
-      'Card number',
+      'Número de tarjeta',
       name: 'add_card_number_label',
       desc: '',
       args: [],
@@ -85,7 +83,7 @@ class S {
 
   String get add_card_invalid_number {
     return Intl.message(
-      'Your card\'s number is invalid.',
+      'El número de tarjeta no es válido.',
       name: 'add_card_invalid_number',
       desc: '',
       args: [],
@@ -103,7 +101,7 @@ class S {
 
   String get add_card_expiration_date_label {
     return Intl.message(
-      'Expiration date',
+      'Fecha de vto.',
       name: 'add_card_expiration_date_label',
       desc: '',
       args: [],
@@ -112,7 +110,7 @@ class S {
 
   String get add_card_empty_expiration_date {
     return Intl.message(
-      'Please enter your card\'s expiration date',
+      ' Por favor ingresa la fecha de vencimiento de la tarjeta',
       name: 'add_card_empty_expiration_date',
       desc: '',
       args: [],
@@ -121,7 +119,7 @@ class S {
 
   String get add_card_invalid_expiration_month {
     return Intl.message(
-      'Your card\'s expiration month is invalid.',
+      'El mes de vencimiento de la tarjeta no es válido.',
       name: 'add_card_invalid_expiration_month',
       desc: '',
       args: [],
@@ -130,7 +128,7 @@ class S {
 
   String get add_card_invalid_expiration_year {
     return Intl.message(
-      'Your card\'s expiration year is invalid.',
+      'El año de vencimiento de la tarjeta no es válido.',
       name: 'add_card_invalid_expiration_year',
       desc: '',
       args: [],
@@ -139,7 +137,7 @@ class S {
 
   String get add_card_invalid_expiration_date {
     return Intl.message(
-      'Your card\'s expiration date is invalid.',
+      'La fecha de vencimiento de la tarjeta no es válido.',
       name: 'add_card_invalid_expiration_date',
       desc: '',
       args: [],
@@ -184,7 +182,7 @@ class S {
 
   String get add_card_invalid_cvc {
     return Intl.message(
-      'Your card\'s security code is invalid.',
+      'El código de seguridad de la tarjeta no es válido.',
       name: 'add_card_invalid_cvc',
       desc: '',
       args: [],
@@ -193,7 +191,7 @@ class S {
 
   String get add_card_fiscal_number_label {
     return Intl.message(
-      'Fiscal number',
+      'Documento de Identificación',
       name: 'add_card_fiscal_number_label',
       desc: '',
       args: [],
@@ -202,7 +200,7 @@ class S {
 
   String get add_card_invalid_fiscal_number {
     return Intl.message(
-      'Your fiscal number is invalid.',
+      'El documento de Identificación no es valido.',
       name: 'add_card_invalid_fiscal_number',
       desc: '',
       args: [],
@@ -211,7 +209,7 @@ class S {
 
   String get add_card_tuya_code_label {
     return Intl.message(
-      'Tuya password',
+      'Clave Tuya',
       name: 'add_card_tuya_code_label',
       desc: '',
       args: [],
@@ -220,7 +218,7 @@ class S {
 
   String get add_card_invalid_tuya_code {
     return Intl.message(
-      'Invalid password',
+      'Clave invalida.',
       name: 'add_card_invalid_tuya_code',
       desc: '',
       args: [],
@@ -229,7 +227,7 @@ class S {
 
   String get add_card_camera_instructions {
     return Intl.message(
-      'Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo',
+      'Ubique el frente de su tarjeta\ndentro de las guías y espere mientras\nel sistema captura la foto',
       name: 'add_card_camera_instructions',
       desc: '',
       args: [],
@@ -238,7 +236,7 @@ class S {
 
   String get loading_lbl {
     return Intl.message(
-      'Loading...',
+      'Cargando...',
       name: 'loading_lbl',
       desc: '',
       args: [],
@@ -251,7 +249,9 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
-      Locale('es', ''), Locale('pt', ''), Locale('en', ''),
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'pt'),
     ];
   }
 
