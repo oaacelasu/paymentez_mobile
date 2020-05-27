@@ -56,6 +56,7 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
   AddCardBloc _addCardBloc;
   Map<String, dynamic> _cameraData;
   PaymentezRepository get _paymentezRepository => widget._paymentezRepository;
+  bool isButtonClicked = false;
 
   bool get isPopulated => _addCardBloc.state.cardBin?.cardType != 'ex' &&
           _addCardBloc.state.cardBin?.cardType != 'ak'
@@ -69,7 +70,9 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
           _tuyaCodeController.text.isNotEmpty);
 
   bool isAddCardButtonEnabled(AddCardState state) {
-    return (isTuyaForm(state) ? state.isTuyaFormValid : state.isFormValid) &&
+    return (isTuyaForm(state)
+            ? state.isTuyaFormValid
+            : state.isFormValid || !isButtonClicked) &&
         isPopulated &&
         !state.isSubmitting;
   }
@@ -356,8 +359,10 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
                           autovalidate: true,
                           autocorrect: false,
                           validator: (_) {
+                            print(state.response);
                             return state.numberError.isNotEmpty &&
-                                    _numberController.value.text.isNotEmpty
+                                    _numberController.value.text.isNotEmpty &&
+                                    isButtonClicked
                                 ? state.numberError
                                 : null;
                           },
@@ -620,6 +625,10 @@ class _AddCardFormState extends State<AddCardForm> with WidgetsBindingObserver {
         origin: null,
         holderName: _nameController.value.text,
         cvc: _cvvController.value.text);
+    setState(() {
+      isButtonClicked = true;
+    });
+
     _addCardBloc.add(
       Submitted(
         context,

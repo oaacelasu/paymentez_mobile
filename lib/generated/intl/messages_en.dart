@@ -39,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "add_card_invalid_number" : MessageLookupByLibrary.simpleMessage("El número de tarjeta no es válido."),
     "add_card_invalid_tuya_code" : MessageLookupByLibrary.simpleMessage("Clave invalida."),
     "add_card_name_hint" : MessageLookupByLibrary.simpleMessage("Jhon Doe"),
-    "add_card_name_label" : MessageLookupByLibrary.simpleMessage("Nombre del titular (igual que en la tarjeta)"),
+    "add_card_name_label" : MessageLookupByLibrary.simpleMessage("Nombre del titular"),
     "add_card_number_hint" : MessageLookupByLibrary.simpleMessage("1234 1234 1234 1234"),
     "add_card_number_label" : MessageLookupByLibrary.simpleMessage("Número de tarjeta"),
     "add_card_tuya_code_label" : MessageLookupByLibrary.simpleMessage("Clave Tuya"),
