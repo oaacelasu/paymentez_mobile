@@ -47,7 +47,7 @@ class S {
 
   String get add_card_name_label {
     return Intl.message(
-      'Nombre del titular',
+      'Card Holder\'s Name',
       name: 'add_card_name_label',
       desc: '',
       args: [],
@@ -56,7 +56,7 @@ class S {
 
   String get add_card_invalid_name {
     return Intl.message(
-      'El Nombre del titular de la tarjeta no es válido.',
+      'Your card holder\'s name is invalid.',
       name: 'add_card_invalid_name',
       desc: '',
       args: [],
@@ -74,7 +74,7 @@ class S {
 
   String get add_card_number_label {
     return Intl.message(
-      'Número de tarjeta',
+      'Card number',
       name: 'add_card_number_label',
       desc: '',
       args: [],
@@ -83,7 +83,7 @@ class S {
 
   String get add_card_invalid_number {
     return Intl.message(
-      'El número de tarjeta no es válido.',
+      'Your card\'s number is invalid.',
       name: 'add_card_invalid_number',
       desc: '',
       args: [],
@@ -101,7 +101,7 @@ class S {
 
   String get add_card_expiration_date_label {
     return Intl.message(
-      'Fecha de vto.',
+      'Expiration date',
       name: 'add_card_expiration_date_label',
       desc: '',
       args: [],
@@ -110,7 +110,7 @@ class S {
 
   String get add_card_empty_expiration_date {
     return Intl.message(
-      ' Por favor ingresa la fecha de vencimiento de la tarjeta',
+      'Please enter your card\'s expiration date',
       name: 'add_card_empty_expiration_date',
       desc: '',
       args: [],
@@ -119,7 +119,7 @@ class S {
 
   String get add_card_invalid_expiration_month {
     return Intl.message(
-      'El mes de vencimiento de la tarjeta no es válido.',
+      'Your card\'s expiration month is invalid.',
       name: 'add_card_invalid_expiration_month',
       desc: '',
       args: [],
@@ -128,7 +128,7 @@ class S {
 
   String get add_card_invalid_expiration_year {
     return Intl.message(
-      'El año de vencimiento de la tarjeta no es válido.',
+      'Your card\'s expiration year is invalid.',
       name: 'add_card_invalid_expiration_year',
       desc: '',
       args: [],
@@ -137,7 +137,7 @@ class S {
 
   String get add_card_invalid_expiration_date {
     return Intl.message(
-      'La fecha de vencimiento de la tarjeta no es válido.',
+      'Your card\'s expiration date is invalid.',
       name: 'add_card_invalid_expiration_date',
       desc: '',
       args: [],
@@ -182,7 +182,7 @@ class S {
 
   String get add_card_invalid_cvc {
     return Intl.message(
-      'El código de seguridad de la tarjeta no es válido.',
+      'Your card\'s security code is invalid.',
       name: 'add_card_invalid_cvc',
       desc: '',
       args: [],
@@ -191,7 +191,7 @@ class S {
 
   String get add_card_fiscal_number_label {
     return Intl.message(
-      'Documento de Identificación',
+      'Fiscal number',
       name: 'add_card_fiscal_number_label',
       desc: '',
       args: [],
@@ -200,7 +200,7 @@ class S {
 
   String get add_card_invalid_fiscal_number {
     return Intl.message(
-      'El documento de Identificación no es valido.',
+      'Your fiscal number is invalid.',
       name: 'add_card_invalid_fiscal_number',
       desc: '',
       args: [],
@@ -209,7 +209,7 @@ class S {
 
   String get add_card_tuya_code_label {
     return Intl.message(
-      'Clave Tuya',
+      'Tuya password',
       name: 'add_card_tuya_code_label',
       desc: '',
       args: [],
@@ -218,7 +218,7 @@ class S {
 
   String get add_card_invalid_tuya_code {
     return Intl.message(
-      'Clave invalida.',
+      'Invalid password',
       name: 'add_card_invalid_tuya_code',
       desc: '',
       args: [],
@@ -227,7 +227,7 @@ class S {
 
   String get add_card_camera_instructions {
     return Intl.message(
-      'Ubique el frente de su tarjeta\ndentro de las guías y espere mientras\nel sistema captura la foto',
+      'Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo',
       name: 'add_card_camera_instructions',
       desc: '',
       args: [],
@@ -236,7 +236,7 @@ class S {
 
   String get loading_lbl {
     return Intl.message(
-      'Cargando...',
+      'Loading...',
       name: 'loading_lbl',
       desc: '',
       args: [],

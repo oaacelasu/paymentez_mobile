@@ -43,6 +43,8 @@ class _AppState extends State<App> with AfterLayoutMixin<App> {
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
       DefaultCupertinoLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+      FallbackCupertinoLocalisationsDelegate(),
       S.delegate
     ];
   }
@@ -68,4 +70,19 @@ class _AppState extends State<App> with AfterLayoutMixin<App> {
     print('afterFirstLayout called');
     Paymentez.getInstance.init(context);
   }
+}
+
+class FallbackCupertinoLocalisationsDelegate
+    extends LocalizationsDelegate<CupertinoLocalizations> {
+  const FallbackCupertinoLocalisationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => true;
+
+  @override
+  Future<CupertinoLocalizations> load(Locale locale) =>
+      DefaultCupertinoLocalizations.load(locale);
+
+  @override
+  bool shouldReload(FallbackCupertinoLocalisationsDelegate old) => false;
 }

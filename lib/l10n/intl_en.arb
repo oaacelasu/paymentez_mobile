@@ -1,30 +1,36 @@
 {
   "app_name" : "Paymentez SDK",
   "add_card_name_hint" : "Jhon Doe",
-  "add_card_name_label": "Nombre del titular",
-  "add_card_invalid_name": "El Nombre del titular de la tarjeta no es válido.",
+  "add_card_name_label": "Card Holder's Name",
+  "add_card_invalid_name": "Your card holder's name is invalid.",
+
+
 
   "add_card_number_hint" : "1234 1234 1234 1234",
-  "add_card_number_label" : "Número de tarjeta",
-  "add_card_invalid_number" : "El número de tarjeta no es válido.",
+  "add_card_number_label" : "Card number",
+  "add_card_invalid_number" : "Your card's number is invalid.",
 
   "add_card_expiration_date_hint" : "MM/YY",
-  "add_card_expiration_date_label" : "Fecha de vto.",
-  "add_card_empty_expiration_date" : " Por favor ingresa la fecha de vencimiento de la tarjeta",
-  "add_card_invalid_expiration_month" : "El mes de vencimiento de la tarjeta no es válido.",
-  "add_card_invalid_expiration_year" : "El año de vencimiento de la tarjeta no es válido.",
-  "add_card_invalid_expiration_date" : "La fecha de vencimiento de la tarjeta no es válido.",
+  "add_card_expiration_date_label" : "Expiration date",
+  "add_card_empty_expiration_date" : "Please enter your card's expiration date",
+  "add_card_invalid_expiration_month" : "Your card's expiration month is invalid.",
+  "add_card_invalid_expiration_year" : "Your card's expiration year is invalid.",
+  "add_card_invalid_expiration_date" : "Your card's expiration date is invalid.",
 
   "add_card_cvc_hint" : "123",
   "add_card_cvc_amex_hint" : "1234",
   "add_card_cvc_label" : "CVC",
   "add_card_cvc_amex_label" : "CVV",
-  "add_card_invalid_cvc" : "El código de seguridad de la tarjeta no es válido.",
-  "add_card_fiscal_number_label" : "Documento de Identificación",
-  "add_card_invalid_fiscal_number" : "El documento de Identificación no es valido.",
+  "add_card_invalid_cvc" : "Your card's security code is invalid.",
 
-  "add_card_tuya_code_label" : "Clave Tuya",
-  "add_card_invalid_tuya_code" : "Clave invalida.",
-  "add_card_camera_instructions" : "Ubique el frente de su tarjeta\ndentro de las guías y espere mientras\nel sistema captura la foto",
-  "loading_lbl" : "Cargando..."
+  "add_card_fiscal_number_label" : "Fiscal number",
+  "add_card_invalid_fiscal_number" : "Your fiscal number is invalid.",
+
+  "add_card_tuya_code_label" : "Tuya password",
+  "add_card_invalid_tuya_code" : "Invalid password",
+  "add_card_camera_instructions" : "Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo",
+  "loading_lbl" : "Loading..."
+
+
+
 }
