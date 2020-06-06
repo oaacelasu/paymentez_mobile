@@ -129,6 +129,7 @@ class AddCardBloc extends Bloc<AddCardEvent, AddCardState> {
     try {
       var response = await _paymentezRepository.createToken(context,
           sessionId: sessionId, card: card);
+      print('the request est returned');
 
       var result = CardModel.fromJson(response.data['card' ?? {}]);
       print('the request est ok');

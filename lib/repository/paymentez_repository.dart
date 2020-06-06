@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_kount/flutter_kount.dart';
 import 'package:paymentez_mobile/config/bloc.dart';
@@ -35,7 +36,7 @@ class PaymentezRepository extends Equatable {
     _dio.options.connectTimeout = 30 * 1000;
     _dio.options.receiveTimeout = 30 * 1000;
     _dio.interceptors
-        .add(LogInterceptor(requestBody: true, responseBody: true)); //开启请求日志
+        .add(LogInterceptor(requestBody: true, responseBody: true));
     _dio.options.headers = {
       "Content-Type": "application/json",
       "Auth-Token": RepositoryUtils.getAuthToken(
@@ -48,12 +49,19 @@ class PaymentezRepository extends Equatable {
     print('${_configState.baseUrl}/v2/card/add');
 
     Response response = await _dio.post('/v2/card/add', data: {
-      "session_id": await FlutterKount.sessionId,
+      "session_id": await (kIsWeb?_getSessionIdForWeb(configState):FlutterKount.sessionId),
       "card": card.toJson(),
       "user": _user.toJson(),
     });
 
+    print(response.statusCode);
+    print(response.data);
+
     return response;
+  }
+
+  Future<String> _getSessionIdForWeb(ConfigState configState) {
+    return Future.value('');
   }
 
   Future<CardBinModel> getCardBin({@required String bin}) async {

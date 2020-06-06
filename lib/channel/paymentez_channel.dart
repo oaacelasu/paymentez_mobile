@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,8 +34,10 @@ class Paymentez {
   }
 
   Future<String> getSessionId(BuildContext context, bool testMode) async =>
-      _kountChannel.invokeMethod(
-          "getSessionId", <String, dynamic>{"test_mode": testMode});
+      kIsWeb
+          ? _getSessionIdForWeb(testMode)
+          : _kountChannel.invokeMethod(
+              "getSessionId", <String, dynamic>{"test_mode": testMode});
 
   Future<dynamic> _handleMethod(MethodCall call, BuildContext context) async {
     _configBloc = BlocProvider.of<ConfigBloc>(context);
@@ -49,5 +52,9 @@ class Paymentez {
                 call.arguments['paymentez_client_app_key'] ?? ''));
         return new Future.value("");
     }
+  }
+
+  Future<String> _getSessionIdForWeb(bool testMode) {
+    return Future.value('');
   }
 }
