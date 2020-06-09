@@ -8,8 +8,12 @@ import 'intl/messages_all.dart';
 // Made by Localizely
 // **************************************************************************
 
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+
 class S {
   S();
+  
+  static S current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -19,7 +23,9 @@ class S {
     final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return S();
+      S.current = S();
+      
+      return S.current;
     });
   } 
 
@@ -27,6 +33,7 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Paymentez SDK`
   String get app_name {
     return Intl.message(
       'Paymentez SDK',
@@ -36,6 +43,7 @@ class S {
     );
   }
 
+  /// `Jhon Doe`
   String get add_card_name_hint {
     return Intl.message(
       'Jhon Doe',
@@ -45,6 +53,7 @@ class S {
     );
   }
 
+  /// `Card Holder's Name`
   String get add_card_name_label {
     return Intl.message(
       'Card Holder\'s Name',
@@ -54,6 +63,7 @@ class S {
     );
   }
 
+  /// `Your card holder's name is invalid.`
   String get add_card_invalid_name {
     return Intl.message(
       'Your card holder\'s name is invalid.',
@@ -63,6 +73,7 @@ class S {
     );
   }
 
+  /// `1234 1234 1234 1234`
   String get add_card_number_hint {
     return Intl.message(
       '1234 1234 1234 1234',
@@ -72,6 +83,7 @@ class S {
     );
   }
 
+  /// `Card number`
   String get add_card_number_label {
     return Intl.message(
       'Card number',
@@ -81,6 +93,7 @@ class S {
     );
   }
 
+  /// `Your card's number is invalid.`
   String get add_card_invalid_number {
     return Intl.message(
       'Your card\'s number is invalid.',
@@ -90,6 +103,7 @@ class S {
     );
   }
 
+  /// `MM/YY`
   String get add_card_expiration_date_hint {
     return Intl.message(
       'MM/YY',
@@ -99,6 +113,7 @@ class S {
     );
   }
 
+  /// `Expiration date`
   String get add_card_expiration_date_label {
     return Intl.message(
       'Expiration date',
@@ -108,6 +123,7 @@ class S {
     );
   }
 
+  /// `Please enter your card's expiration date`
   String get add_card_empty_expiration_date {
     return Intl.message(
       'Please enter your card\'s expiration date',
@@ -117,6 +133,7 @@ class S {
     );
   }
 
+  /// `Your card's expiration month is invalid.`
   String get add_card_invalid_expiration_month {
     return Intl.message(
       'Your card\'s expiration month is invalid.',
@@ -126,6 +143,7 @@ class S {
     );
   }
 
+  /// `Your card's expiration year is invalid.`
   String get add_card_invalid_expiration_year {
     return Intl.message(
       'Your card\'s expiration year is invalid.',
@@ -135,6 +153,7 @@ class S {
     );
   }
 
+  /// `Your card's expiration date is invalid.`
   String get add_card_invalid_expiration_date {
     return Intl.message(
       'Your card\'s expiration date is invalid.',
@@ -144,6 +163,7 @@ class S {
     );
   }
 
+  /// `123`
   String get add_card_cvc_hint {
     return Intl.message(
       '123',
@@ -153,6 +173,7 @@ class S {
     );
   }
 
+  /// `1234`
   String get add_card_cvc_amex_hint {
     return Intl.message(
       '1234',
@@ -162,6 +183,7 @@ class S {
     );
   }
 
+  /// `CVC`
   String get add_card_cvc_label {
     return Intl.message(
       'CVC',
@@ -171,6 +193,7 @@ class S {
     );
   }
 
+  /// `CVV`
   String get add_card_cvc_amex_label {
     return Intl.message(
       'CVV',
@@ -180,6 +203,7 @@ class S {
     );
   }
 
+  /// `Your card's security code is invalid.`
   String get add_card_invalid_cvc {
     return Intl.message(
       'Your card\'s security code is invalid.',
@@ -189,6 +213,7 @@ class S {
     );
   }
 
+  /// `Fiscal number`
   String get add_card_fiscal_number_label {
     return Intl.message(
       'Fiscal number',
@@ -198,6 +223,7 @@ class S {
     );
   }
 
+  /// `Your fiscal number is invalid.`
   String get add_card_invalid_fiscal_number {
     return Intl.message(
       'Your fiscal number is invalid.',
@@ -207,6 +233,7 @@ class S {
     );
   }
 
+  /// `Tuya password`
   String get add_card_tuya_code_label {
     return Intl.message(
       'Tuya password',
@@ -216,6 +243,7 @@ class S {
     );
   }
 
+  /// `Invalid password`
   String get add_card_invalid_tuya_code {
     return Intl.message(
       'Invalid password',
@@ -225,6 +253,7 @@ class S {
     );
   }
 
+  /// `Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo`
   String get add_card_camera_instructions {
     return Intl.message(
       'Locate the front of your card\ninside the guides and wait while\nthe camera capture the photo',
@@ -234,6 +263,7 @@ class S {
     );
   }
 
+  /// `Loading...`
   String get loading_lbl {
     return Intl.message(
       'Loading...',
