@@ -19,16 +19,16 @@ dependencies:
   path_provider: ^1.6.8
   after_layout: ^1.0.7+2
   crypto: ^2.1.4
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
   mask_text_input_formatter: ^1.0.6
   fluro: ^1.6.3
   flutter_kount:
     git:
-      url: ssh://git@bitbucket.org:p_gateway/flutter_kount.git
+      url: git://github.com/oaacelasu/flutter_kount.git
       ref: master
   flutter_card_io_v2:
     git:
-      url: ssh://git@bitbucket.org:p_gateway/flutter_card_io_v2.git
+      url: git://github.com/oaacelasu/flutter_card_io_v2.git
       ref: master
 
   cupertino_icons: ^0.1.2
